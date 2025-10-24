@@ -123,3 +123,29 @@ Total 9 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
 To https://github.com/manuelbarzi/neoland-202510
    c0018b0..b123f3d  main -> main
 ```
+
+## git log
+
+Shows commits history ordered descending by time.
+
+```sh
+$ git log
+git log
+commit bf5f69e979cdd9fec2a4d7ba1c8410a6d9acb602 (HEAD -> main, origin/main, origin/HEAD)
+Author: Manuel Barzi <manuelbarzi@gmail.com>
+Date:   Thu Oct 23 22:04:50 2025 +0200
+
+    add git commit and git push commands to git doc
+
+commit b123f3d3f8d81e2afbbb63eda8e080a45308dfa7
+Author: Manuel Barzi <manuelbarzi@gmail.com>
+Date:   Thu Oct 23 21:52:11 2025 +0200
+
+    add bash and git docs
+
+commit c0018b0a7fcd2974422226e792bbc4c080df6e91
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Thu Oct 23 20:10:57 2025 +0200
+
+    Initial commit
+```
