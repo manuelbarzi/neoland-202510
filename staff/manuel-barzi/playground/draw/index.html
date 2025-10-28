@@ -195,9 +195,20 @@
             border-radius: 50%;
         }
 
+        #window {
+            width: 30px;
+            height: 15px;
+            background-color: aqua;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
         #wings {
             width: 50px;
-            height: 50px;
+            height: 0px;
             background-color: transparent;
             position: absolute;
             left: -50px;
@@ -205,6 +216,15 @@
             border-bottom: 50px solid lightgray;
             border-left: 50px solid transparent;
             border-right: 50px solid transparent;
+        }
+
+        #tail {
+            width: 10px;
+            height: 40px;
+            background-color: gray;
+            position: absolute;
+            top: 10px;
+            left: 20px;
         }
 
         #fire {
@@ -260,7 +280,10 @@
 
     <div id="spaceship">
         <div id="head"></div>
-        <div id="wings"></div>
+        <div id="window"></div>
+        <div id="wings">
+            <div id="tail"></div>
+        </div>
         <div id="fire">
             <div id="inner-fire"></div>    
         </div>
