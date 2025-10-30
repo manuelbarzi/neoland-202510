@@ -57,6 +57,22 @@
             background-color: darkgray;
         }
 
+        .bg-lightgray {
+            background-color: lightgray;
+        }
+
+        .bg-transparent {
+            background-color: transparent;
+        }
+
+        .bg-gold {
+            background-color: gold;
+        }
+
+        .bg-tomato {
+            background-color: tomato;
+        }
+
         .p-10 {
             padding: 10px;
         }
@@ -89,6 +105,10 @@
             width: 60px;
         }
 
+        .w-70 {
+            width: 70px;
+        }
+
         .w-100 {
             width: 100px;
         }
@@ -97,8 +117,16 @@
             width: 200px;
         }
 
+        .h-0 {
+            height: 0;
+        }
+
         .h-10 {
             height: 10px;
+        }
+
+        .h-15 {
+            height: 15px;
         }
 
         .h-20 {
@@ -137,16 +165,32 @@
             border-radius: 20px;
         }
 
+        .rounded-top-left-10 {
+            border-top-left-radius: 10px;
+        }
+
         .rounded-top-left-20 {
             border-top-left-radius: 20px;
+        }
+
+        .rounded-top-right-10 {
+            border-top-right-radius: 10px;
         }
 
         .rounded-top-right-20 {
             border-top-right-radius: 20px;
         }
 
+        .-left-50 {
+            left: -50px;
+        }
+
         .-left-10 {
             left: -10px;
+        }
+
+        .left-0 {
+            left: 0px;
         }
 
         .left-5 {
@@ -155,6 +199,10 @@
 
         .left-10 {
             left: 10px;
+        }
+
+        .left-15 {
+            left: 15px;
         }
 
         .left-20 {
@@ -197,6 +245,10 @@
             right: 20px;
         }
 
+        .-top-50 {
+            top: -50px;
+        }
+
         .-top-20 {
             top: -20px;
         }
@@ -225,6 +277,18 @@
             top: 250px;
         }
 
+        .top-300 {
+            top: 300px;
+        }
+
+        .-bottom-50 {
+            bottom: -50px;
+        }
+
+        .bottom-0 {
+            bottom: 0;
+        }
+
         .bottom-5 {
             bottom: 5px;
         }
@@ -233,79 +297,48 @@
             bottom: 10px;
         }
 
-        /* spaceship */
+        .bottom-20 {
+            bottom: 20px;
+        }
 
-        .spaceship {
-            width: 50px;
-            height: 100px;
-            background-color: lightgray;
-            position: absolute;
-            left: 100px;
-            top: 300px;
+        .border-bottom-50 {
+            border-bottom-width: 50px;
+        }
 
-            & .head {
-                width: 50px;
-                height: 100px;
-                background-color: lightgray;
-                position: absolute;
-                left: 0px;
-                top: -50px;
-                border-radius: 50%;
-            }
+        .border-bottom-solid {
+            border-bottom-style: solid;
+        }
 
-            & .window {
-                width: 30px;
-                height: 15px;
-                background-color: aqua;
-                position: absolute;
-                left: 10px;
-                top: -20px;
-                border-top-left-radius: 10px;
-                border-top-right-radius: 10px;
-            }
+        .border-bottom-lightgray {
+            border-bottom-color: lightgray;
+        }
 
-            & .wings {
-                width: 50px;
-                height: 0px;
-                background-color: transparent;
-                position: absolute;
-                left: -50px;
-                bottom: 0px;
-                border-bottom: 50px solid lightgray;
-                border-left: 50px solid transparent;
-                border-right: 50px solid transparent;
-            }
+        .border-left-50 {
+            border-left-width: 50px;
+        }
 
-            & .tail {
-                width: 10px;
-                height: 40px;
-                background-color: gray;
-                position: absolute;
-                top: 10px;
-                left: 20px;
-            }
+        .border-left-solid {
+            border-left-style: solid;
+        }
 
-            & .fire {
-                width: 70px;
-                height: 100px;
-                background-color: gold;
-                position: absolute;
-                left: -10px;
-                bottom: -50px;
-                border-radius: 50%;
-                z-index: -10;
-            }
+        .border-left-transparent {
+            border-left-color: transparent;
+        }
 
-            & .inner-fire {
-                width: 40px;
-                height: 60px;
-                background-color: tomato;
-                position: absolute;
-                left: 15px;
-                bottom: 20px;
-                border-radius: 50%;
-                z-index: -10;
-            }
+        .border-right-50 {
+            border-right-width: 50px;
+        }
+
+        .border-right-solid {
+            border-right-style: solid;
+        }
+
+        .border-right-transparent {
+            border-right-color: transparent;
+        }
+
+        .-z-10 {
+            z-index: -10;
         }
     </style>
 </head>
@@ -344,14 +377,14 @@
         </div>
     </div>
 
-    <div class="spaceship">
-        <div class="head"></div>
-        <div class="window"></div>
-        <div class="wings">
-            <div class="tail"></div>
+    <div class="w-50 h-100 bg-lightgray absolute left-100 top-300">
+        <div class="w-50 h-100 bg-lightgray absolute left-0 -top-50 rounded-50per"></div>
+        <div class="w-30 h-15 bg-aqua absolute left-10 -top-20 rounded-top-left-10 rounded-top-right-10"></div>
+        <div class="w-50 h-0 bg-transparent absolute -left-50 bottom-0 border-bottom-50 border-bottom-solid border-bottom-lightgray border-left-50 border-left-solid border-left-transparent border-right-50 border-right-solid border-right-transparent">
+            <div class="w-10 h-40 bg-gray absolute top-10 left-20"></div>
         </div>
-        <div class="fire">
-            <div class="inner-fire"></div>
+        <div class="w-70 h-100 bg-gold absolute -left-10 -bottom-50 rounded-50per -z-10">
+            <div class="w-40 h-60 bg-tomato absolute left-15 bottom-20 rounded-50per -z-10"></div>
         </div>
     </div>
 </body>
