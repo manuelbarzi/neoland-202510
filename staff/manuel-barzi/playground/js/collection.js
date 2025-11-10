@@ -5,8 +5,13 @@ var collection = {
 // TODO implement method add
 
 collection.add('Peter')
-collection.add('Wendy')
-collection.add('James')
+console.log(collection)
+// { 0: 'Peter', count: 1 }
 
+collection.add('Wendy')
+console.log(collection)
+// { 0: 'Peter', 1: 'Wendy', count: 2 }
+
+collection.add('James')
 console.log(collection)
 // { 0: 'Peter', 1: 'Wendy', 2: 'James', count: 3 }
