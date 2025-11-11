@@ -2,8 +2,6 @@ var collection = {
     count: 0
 }
 
-// TODO implement add method
-
 collection.add = function(item) {
     this[this.count] = item
     this.count++
@@ -21,8 +19,42 @@ collection.add('James')
 console.log(collection)
 // { 0: 'Peter', 1: 'Wendy', 2: 'James', count: 3 }
 
-// TODO implement remove method
+collection.remove = function(item) {
+    for (var i = 0; i < this.count; i++)
+        if (this[i] === item)
+            delete this[i]
+}
 
 collection.remove('Wendy')
 console.log(collection)
 // { 0: 'Peter', 2: 'James', count: 3 }
+
+collection.add('Wendy')
+collection.add('Pepito')
+collection.add('Wendy')
+console.log(collection)
+// { 0: 'Peter', 2: 'James', 3: 'Wendy', 4: 'Pepito', 5: 'Wendy', count: 6 }
+
+collection.removeFirst = function(item) {
+    for (var i = 0; i < this.count; i++)
+        if (this[i] === item) {
+            delete this[i]
+
+            return
+        }
+}
+
+collection.removeFirst('Wendy')
+console.log(collection)
+// { 0: 'Peter', 2: 'James', 4: 'Pepito', 5: 'Wendy', count: 6 }
+
+collection.add('Pepito')
+console.log(collection)
+// { 0: 'Peter', 2: 'James', 4: 'Pepito', 5: 'Wendy', 6: 'Pepito', count: 7 }
+
+
+// TODO implement update method
+
+collection.update('Pepito', 'Jiminy')
+console.log(collection)
+// { 0: 'Peter', 2: 'James', 4: 'Jiminy', 5: 'Wendy', 6: 'Jiminy', count: 7 }
