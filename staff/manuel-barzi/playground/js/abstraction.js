@@ -49,4 +49,10 @@ var products = new Array(nikeAirMaxBlack, nikeAirMaxWhite, pumaFerrariRed, pumaF
 
 console.clear()
 
-// TODO show list of products in console (with all information inline per product)
+for (var i = 0; i < products.length; i++) {
+    // console.log(products[i].brand + ' ' + products[i].model + ' ' + products[i].variant + ' (' + products[i].sku + ')')
+
+    var product = products[i]
+    var line = product.brand + ' ' + product.model + ' ' + product.variant + ' (' + product.sku + ')'
+    console.log(line)
+}
