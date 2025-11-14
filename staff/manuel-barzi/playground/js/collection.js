@@ -62,8 +62,14 @@ collection.update('Pepito', 'Jiminy')
 console.log(collection)
 // { 0: 'Peter', 2: 'James', 4: 'Jiminy', 5: 'Wendy', 6: 'Jiminy', count: 7 }
 
+collection.updateFirst = function(target, replacement) {
+    for (var i = 0; i < this.count; i++)
+        if (this[i] === target) {
+            this[i] = replacement
 
-// TODO implement updateFirst method to find the first element matching target and update it with replacement
+            return
+        }
+}
 
 collection.updateFirst('Jiminy', 'Pepito')
 console.log(collection)
