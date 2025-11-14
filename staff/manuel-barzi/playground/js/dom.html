@@ -11,9 +11,44 @@
     <h1>Hello, DOM!</h1>
 
     <script>
-        document.childNodes[1].childNodes[2].childNodes[1].style.backgroundColor = 'dodgerblue'
-        document.childNodes[1].childNodes[2].childNodes[1].style.color = 'gold'
-        document.childNodes[1].childNodes[2].childNodes[1].style.paddingLeft = '.5rem'
+        // document.childNodes[1].childNodes[2].childNodes[1].style.backgroundColor = 'dodgerblue'
+        // document.childNodes[1].childNodes[2].childNodes[1].style.color = 'gold'
+        // document.childNodes[1].childNodes[2].childNodes[1].style.paddingLeft = '.5rem'
+
+        let marioX = 100, marioY = 200
+        const step = 10
+
+        const mario = document.createElement('div')
+        mario.style.width = '100px'
+        mario.style.height = '100px'
+        mario.style.backgroundColor = 'tomato'
+        mario.style.position = 'absolute'
+        mario.style.left = marioX + 'px'
+        mario.style.top = marioY + 'px'
+        document.body.appendChild(mario)
+
+        const marioHead = document.createElement('div')
+        marioHead.style.width = '50px'
+        marioHead.style.height = '50px'
+        marioHead.style.backgroundColor = 'gold'
+        marioHead.style.position = 'absolute'
+        marioHead.style.top = '-50px'
+        marioHead.style.left = '25px'
+        mario.appendChild(marioHead)
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowUp')
+                marioY -= step // marioY = marioY - step
+            else if (event.key === 'ArrowDown')
+                marioY += step
+            else if (event.key === 'ArrowLeft')
+                marioX -= step
+            else if (event.key === 'ArrowRight')
+                marioX += step
+
+            mario.style.left = marioX + 'px'
+            mario.style.top = marioY + 'px'
+        })
     </script>
 </body>
 
