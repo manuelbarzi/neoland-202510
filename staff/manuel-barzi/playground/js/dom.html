@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOM</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap');
+    </style>
 </head>
 
 <body>
@@ -99,6 +103,32 @@
                     goomba.style.backgroundColor = 'tomato'
             }
         })
+
+        const clock = document.createElement('div')
+        clock.style.width = '150px'
+        clock.style.height = '15px'
+        clock.style.backgroundColor = 'black'
+        clock.style.color = 'tomato'
+        clock.style.fontFamily = 'Sixtyfour'
+        clock.style.textAlign = 'center'
+        clock.style.padding = '10px'
+        clock.style.borderWidth = '5px'
+        clock.style.borderColor = 'gray'
+        clock.style.borderStyle = 'solid'
+        clock.textContent = 'Loading...'
+        
+        document.body.appendChild(clock)
+
+        // let counter = 30
+
+        setInterval(function() {
+            let now = new Date()
+            clock.textContent = now.toLocaleTimeString()
+            // clock.textContent = counter
+            // counter--
+
+            console.log(clock.textContent)
+        }, 1000)
     </script>
 </body>
 
