@@ -48,14 +48,14 @@
                 }
         }
 
-        Collection.prototype.push = function (item) {
+        Collection.prototype.push = function(item) {
             this[this.count] = item
             this.count++
 
             return this.count
         }
 
-        Collection.prototype.pop = function () {
+        Collection.prototype.pop = function() {
             const lastItem = this[this.count - 1]
             delete this[this.count - 1]
             this.count--
@@ -89,7 +89,7 @@
         }
         */
 
-        Collection.prototype.shift = function () {
+        Collection.prototype.shift = function() {
             // Collection {0: 3.141516, 1: 666, 2: 2000, count: 3}
             // keep 3.141516
             // Collection {0: 666, 1: 666, 2: 2000, count: 3}
@@ -109,46 +109,33 @@
             this.count--
 
             delete this[this.count]
-
+            
             return firstItem
         }
 
         // TODO implement Collection.prototype.includes
 
-        Collection.prototype.includes = function (searchItem, fromIndex) {
+        Collection.prototype.includes = function(searchItem) {
             // Collection {0: 'red', 1: 'green', 2: 'blue', count: 3}
+            
+            // searchItem is blue
+            // compare value at 0 with searchItem
+            // compare value at 1 with searchItem
+            // compare value at 2 with searchItem
+            // return true
 
-            // searchItem green, fromIndex 0
+            // searchItem is orange
+            // compare value at 0 with searchItem
+            // compare value at 1 with searchItem
+            // compare value at 2 with searchItem
+            // return false
+
+            // searchItem is green
             // compare value at 0 with searchItem
             // compare value at 1 with searchItem
             // return true
 
-            // searchItem green, fromIndex 1
-            // compare value at 1 with searchItem
-            // return true
-
-            // searchItem green, fromIndex 2
-            // compare value at 2 with searchItem
-            // return false
-
-            /*
-            if (fromIndex === undefined)
-                for (let i = 0; i < this.count; i++) {
-                    const item = this[i]
-
-                    if (item === searchItem) return true
-                }
-            else if (fromIndex >= 0)
-                for (let i = fromIndex; i < this.count; i++) {
-                    const item = this[i]
-
-                    if (item === searchItem) return true
-                }
-            */
-
-            if (fromIndex === undefined) fromIndex = 0
-
-            for (let i = fromIndex; i < this.count; i++) {
+            for (let i = 0; i < this.count; i++) {
                 const item = this[i]
 
                 if (item === searchItem) return true
