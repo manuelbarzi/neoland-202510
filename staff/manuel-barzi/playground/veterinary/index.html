@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Constructors</title>
+    <title>Veterinary</title>
 </head>
 
 <body style="background-color: black;">
@@ -40,13 +40,45 @@
             this.vaccines.push({ vaccineId: vaccineId, expirationDate: expirationDate })
         }
 
+        function Database() {
+            this.vaccines = []
+            this.owners = []
+            this.pets = []
+        }
+
+        Database.prototype.findOwnerById = function(ownerId){
+            for (let i = 0; i < this.owners.length; i++) {
+                const owner = this.owners[i]
+
+                if (owner.id === ownerId)
+                    return owner
+            }
+
+            return null
+        }
+
+        Database.prototype.findPetsByOwnerId = function(ownerId) {
+            const foundPets = []
+
+            for (let i = 0; i < this.pets.length; i++) {
+                const pet = this.pets[i]
+
+                if (pet.ownerId === ownerId)
+                    foundPets.push(pet)
+            }
+
+            return foundPets
+        }
+
+        // TODO implement find-pet-by-id
+
+        Database.prototype.findPetById = function(petId) {
+            
+        }
+
         // usage
 
-        const database = {
-            vaccines: [],
-            owners: [],
-            pets: []
-        }
+        const database = new Database()
 
         database.vaccines.push(new Vaccine('xyz-345', 'rabitis', 'blah blah blah 200mg'))
         database.vaccines.push(new Vaccine('uvw-123', 'mosquitus', 'bleh bleh bleh auch! 100mg'))
@@ -70,6 +102,10 @@
         database.pets[1].saveVaccine('rst-456', '2026-03-03')
         database.pets[1].saveVaccine('uvw-123', '2026-04-04')
         database.pets[1].saveVaccine('xyz-345', '2026-11-01')
+
+        // const owner = database.findOwnerById('2345678980W')
+        // console.log(owner)
+        // Owner('2345678980W', 'Juan', 'Indiferente', 'New Jersery, 345', '+1(786)432654', 'juan@indiferente.com')
     </script>
 </body>
 
