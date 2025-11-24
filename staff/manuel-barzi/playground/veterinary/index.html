@@ -24,8 +24,9 @@
             this.description = description
         }
 
-        function Owner(id, name, surname, address, phone, email) {
+        function Owner(id, passport, name, surname, address, phone, email) {
             this.id = id
+            this.passport = passport
             this.name = name
             this.surname = surname
             this.address = address
@@ -34,9 +35,10 @@
             this.active = true
         }
 
-        function Pet(ownerId, id, name, yearOfBirth, species, gender, race, colors) {
+        function Pet(ownerId, id, passport, name, yearOfBirth, species, gender, race, colors) {
             this.ownerId = ownerId
             this.id = id
+            this.passport = passport
             this.name = name
             this.yearOfBirth = yearOfBirth
             this.species = species
@@ -52,9 +54,42 @@
 
         function Database() {
             this.users = []
+            this.usersCount = 0
             this.vaccines = []
             this.owners = []
+            this.ownersCount = 0
             this.pets = []
+        }
+
+        // users
+
+        Database.prototype.addUser = function (user) {
+            this.users.push(user)
+            this.usersCount++
+        }
+
+        Database.prototype.findUserByUsername = function(username) {
+            for (let i = 0; i < this.users.length; i++) {
+                const user = this.users[i]
+
+                if (user.username === username)
+                    return user
+            }
+
+            return null
+        }
+
+        // vaccines
+
+        Database.prototype.addVaccine = function (vaccine) {
+            this.vaccines.push(vaccine)
+        }
+
+        // owners
+
+        Database.prototype.addOwner = function (owner) {
+            this.owners.push(owner)
+            this.ownersCount++
         }
 
         Database.prototype.findOwnerById = function (ownerId) {
@@ -66,6 +101,23 @@
             }
 
             return null
+        }
+
+        Database.prototype.findOwnerByPassport = function (ownerPassport) {
+            for (let i = 0; i < this.owners.length; i++) {
+                const owner = this.owners[i]
+
+                if (owner.passport === ownerPassport)
+                    return owner
+            }
+
+            return null
+        }
+
+        // pets
+
+        Database.prototype.addPet = function (pet) {
+            this.pets.push(pet)
         }
 
         Database.prototype.findPetsByOwnerId = function (ownerId) {
@@ -92,47 +144,13 @@
             return null
         }
 
-        Database.prototype.addUser = function (user) {
-            this.users.push(user)
-        }
-
-        Database.prototype.findUserByUsername = function(username) {
-            for (let i = 0; i < this.users.length; i++) {
-                const user = this.users[i]
-
-                if (user.username === username)
-                    return user
-            }
-
-            return null
-        }
-
-        Database.prototype.addVaccine = function (vaccine) {
-            this.vaccines.push(vaccine)
-        }
-
-        Database.prototype.addOwner = function (owner) {
-            this.owners.push(owner)
-        }
-
-        Database.prototype.addPet = function (pet) {
-            this.pets.push(pet)
-        }
-
         const data = new Database()
 
         function Logic() {
 
         }
 
-        Logic.prototype.registerUser = function(name, surname, username, password, passwordRepeat) {
-            // TODO implement this method
-            /*
-            steps
-            - validate inputs: if fields do not follow validation rules then send error "invalid field x" (rules are: type, content)
-            - check if user already exists in data with given username: if user exists send error "user already exists", else add user to data)
-            */
-
+        Logic.prototype.registerUser = function(name, surname, username, password, passwordRepeat, role) {
             if (typeof name !== 'string') return 'invalid name type'
             if (name.length < 1) return 'invalid name length'
 
@@ -150,55 +168,53 @@
 
             if (password !== passwordRepeat) return 'passwords do not match'
 
+            if (typeof role !== 'string') return 'invalid role type'
+            if (role !== 'auxiliar' && role !== 'veterinary') return 'invalid role value'
+
             let user = data.findUserByUsername(username)
 
             if (user !== null) return 'user already exists'
 
-            user = new User('user-?', name, surname, username, password, passwordRepeat)
+            user = new User('user-' + data.usersCount, name, surname, username, password, role)
 
             data.addUser(user)
         }
 
-        Logic.prototype.registerOwner = function(id, name, surname, address, phone, email) {
-            // TODO implement me
+        Logic.prototype.registerOwner = function(passport, name, surname, address, phone, email) {
+            if (typeof passport !== 'string') return 'invalid passport type'
+            if (passport.length < 6) return 'invalid passport length'
+
+            if (typeof name !== 'string') return 'invalid name type'
+            if (name.length < 1) return 'invalid name length'
+
+            if (typeof surname !== 'string') return 'invalid surname type'
+            if (surname.length < 2) return 'invalid surname length'
+
+            if (typeof address !== 'string') return 'invalid address type'
+            if (address.length < 5) return 'invalid address length'
+
+            if (typeof phone !== 'string') return 'invalid phone type'
+            if (phone.length < 5) return 'invalid phone length'
+
+            if (typeof email !== 'string') return 'invalid email type'
+            if (email.length < 6) return 'invalid email length'
+
+            let owner = data.findOwnerByPassport(passport)
+
+            if (owner !== null) return 'owner already exists'
+
+            owner = new Owner('owner-' + data.ownersCount, passport, name, surname, address, phone, email)
+
+            data.addOwner(owner)
+        }
+
+        // TODO implement register-pet logic
+        
+        Logic.prototype.registerPet = function() {
+
         }
 
         const logic = new Logic()
-
-        // usage
-
-        // logic.registerUser('Peter', 'Pan', 'peterpan', '123123123', '123123123')
-        // logic.registerUser('Peter', 'Pan', 'peterpan', '123123123', '123123123')
-
-        // data.addUser(new User('user-1', 'Peter', 'Pan', 'peterpan', '123123123', 'auxiliar'))
-        // data.addUser(new User('user-2', 'Wendy', 'Darling', 'wendydarling', '123123123', 'veterinary'))
-
-        // data.addVaccine(new Vaccine('xyz-345', 'rabitis', 'blah blah blah 200mg'))
-        // data.addVaccine(new Vaccine('uvw-123', 'mosquitus', 'bleh bleh bleh auch! 100mg'))
-        // data.addVaccine(new Vaccine('rst-456', 'parvovirus', 'blih blih blih 300mg'))
-
-        // data.addOwner(new Owner('123456789T', 'Laura', 'Chico', 'Mahnattan, 123', '+1(678)123456', 'laura@chico.com'))
-
-        // data.addPet(new Pet('123456789T', 'abc-123', 'Tobías', 2023, 'canine', 'masculine', 'mix', ['black']))
-        // data.addPet(new Pet('123456789T', 'def-456', 'Pelayo', 2024, 'canine', 'masculine', 'mix', ['brown', 'white']))
-
-        // data.addOwner(new Owner('2345678980W', 'Juan', 'Indiferente', 'New Jersery, 345', '+1(786)432654', 'juan@indiferente.com'))
-
-        // data.addPet(new Pet('2345678980W', 'ghi-789', 'Dalí', 2022, 'canine', 'masculine', 'american bully', ['gray', 'white']))
-        // data.addPet(new Pet('2345678980W', 'jkl-012', 'Floki', 2017, 'feline', 'masculine', 'bombay', ['black']))
-        // data.addPet(new Pet('2345678980W', 'mno-345', 'Olga', 2017, 'feline', 'feminine', 'siamese', ['gray', 'white', 'brown']))
-
-        // data.findPetById('abc-123').saveVaccine('rst-456', '2026-01-01')
-        // data.findPetById('abc-123').saveVaccine('uvw-123', '2026-02-02')
-        // data.findPetById('abc-123').saveVaccine('xyz-345', '2026-11-01')
-
-        // data.findPetById('def-456').saveVaccine('rst-456', '2026-03-03')
-        // data.findPetById('def-456').saveVaccine('uvw-123', '2026-04-04')
-        // data.findPetById('def-456').saveVaccine('xyz-345', '2026-11-01')
-
-        // // const owner = database.findOwnerById('2345678980W')
-        // // console.log(owner)
-        // // Owner('2345678980W', 'Juan', 'Indiferente', 'New Jersery, 345', '+1(786)432654', 'juan@indiferente.com')
     </script>
 </body>
 
