@@ -164,29 +164,29 @@
         }
 
         Logic.prototype.registerUser = function (name, surname, username, password, passwordRepeat, role) {
-            if (typeof name !== 'string') throw new Error('invalid name type')
-            if (name.length < 1) throw new Error('invalid name length')
+            if (typeof name !== 'string') return 'invalid name type'
+            if (name.length < 1) return 'invalid name length'
 
-            if (typeof surname !== 'string') throw new Error('invalid surname type')
-            if (surname.length < 2) throw new Error('invalid surname length')
+            if (typeof surname !== 'string') return 'invalid surname type'
+            if (surname.length < 2) return 'invalid surname length'
 
-            if (typeof username !== 'string') throw new Error('invalid username type')
-            if (username.length < 4) throw new Error('invalid username length')
+            if (typeof username !== 'string') return 'invalid username type'
+            if (username.length < 4) return 'invalid username length'
 
-            if (typeof password !== 'string') throw new Error('invalid password type')
-            if (password.length < 8) throw new Error('invalid password length')
+            if (typeof password !== 'string') return 'invalid password type'
+            if (password.length < 8) return 'invalid password length'
 
-            if (typeof passwordRepeat !== 'string') throw new Error('invalid passwordRepeat type')
-            if (passwordRepeat.length < 8) throw new Error('invalid passwordRepeat length')
+            if (typeof passwordRepeat !== 'string') return 'invalid passwordRepeat type'
+            if (passwordRepeat.length < 8) return 'invalid passwordRepeat length'
 
-            if (password !== passwordRepeat) throw new Error('passwords do not match')
+            if (password !== passwordRepeat) return 'passwords do not match'
 
-            if (typeof role !== 'string') throw new Error('invalid role type')
-            if (role !== 'auxiliar' && role !== 'veterinary') throw new Error('invalid role value')
+            if (typeof role !== 'string') return 'invalid role type'
+            if (role !== 'auxiliar' && role !== 'veterinary') return 'invalid role value'
 
             let user = data.findUserByUsername(username)
 
-            if (user !== null) throw new Error('user already exists')
+            if (user !== null) return 'user already exists'
 
             user = new User('user-' + data.usersCount, name, surname, username, password, role)
 
@@ -194,27 +194,27 @@
         }
 
         Logic.prototype.registerOwner = function (passport, name, surname, address, phone, email) {
-            if (typeof passport !== 'string') throw new Error('invalid passport type')
-            if (passport.length < 6) throw new Error('invalid passport length')
+            if (typeof passport !== 'string') return 'invalid passport type'
+            if (passport.length < 6) return 'invalid passport length'
 
-            if (typeof name !== 'string') throw new Error('invalid name type')
-            if (name.length < 1) throw new Error('invalid name length')
+            if (typeof name !== 'string') return 'invalid name type'
+            if (name.length < 1) return 'invalid name length'
 
-            if (typeof surname !== 'string') throw new Error('invalid surname type')
-            if (surname.length < 2) throw new Error('invalid surname length')
+            if (typeof surname !== 'string') return 'invalid surname type'
+            if (surname.length < 2) return 'invalid surname length'
 
-            if (typeof address !== 'string') throw new Error('invalid address type')
-            if (address.length < 5) throw new Error('invalid address length')
+            if (typeof address !== 'string') return 'invalid address type'
+            if (address.length < 5) return 'invalid address length'
 
-            if (typeof phone !== 'string') throw new Error('invalid phone type')
-            if (phone.length < 5) throw new Error('invalid phone length')
+            if (typeof phone !== 'string') return 'invalid phone type'
+            if (phone.length < 5) return 'invalid phone length'
 
-            if (typeof email !== 'string') throw new Error('invalid email type')
-            if (email.length < 6) throw new Error('invalid email length')
+            if (typeof email !== 'string') return 'invalid email type'
+            if (email.length < 6) return 'invalid email length'
 
             let owner = data.findOwnerByPassport(passport)
 
-            if (owner !== null) throw new Error('owner already exists')
+            if (owner !== null) return 'owner already exists'
 
             owner = new Owner('owner-' + data.ownersCount, passport, name, surname, address, phone, email)
 
@@ -222,37 +222,37 @@
         }
 
         Logic.prototype.registerPet = function (ownerId, passport, name, yearOfBirth, species, gender, race, colors) {
-            if (typeof ownerId !== 'string') throw new Error('invalid ownerId type')
-            if (ownerId.length < 7) throw new Error('invalid ownerId length')
+            if (typeof ownerId !== 'string') return 'invalid ownerId type'
+            if (ownerId.length < 7) return 'invalid ownerId length'
 
-            if (typeof passport !== 'string') throw new Error('invalid passport type')
-            if (passport.length < 10) throw new Error('invalid passport length')
+            if (typeof passport !== 'string') return 'invalid passport type'
+            if (passport.length < 10) return 'invalid passport length'
 
-            if (typeof name !== 'string') throw new Error('invalid name type')
-            if (name.length < 2) throw new Error('invalid name length')
+            if (typeof name !== 'string') return 'invalid name type'
+            if (name.length < 2) return 'invalid name length'
 
-            if (typeof yearOfBirth !== 'number') throw new Error('invalid yearOfBirth type')
-            if (yearOfBirth < 1900) throw new Error('invalid yearOfBirth value')
+            if (typeof yearOfBirth !== 'number') return 'invalid yearOfBirth type'
+            if (yearOfBirth < 1900) return 'invalid yearOfBirth value'
 
-            if (typeof species !== 'string') throw new Error('invalid species type')
-            if (species.length < 3) throw new Error('invalid species length')
+            if (typeof species !== 'string') return 'invalid species type'
+            if (species.length < 3) return 'invalid species length'
 
-            if (typeof gender !== 'string') throw new Error('invalid gender type')
-            if (gender !== 'female' && gender !== 'male') throw new Error('invalid gender value')
+            if (typeof gender !== 'string') return 'invalid gender type'
+            if (gender !== 'female' && gender !== 'male') return 'invalid gender value'
 
-            if (typeof race !== 'string') throw new Error('invalid race type')
-            if (race.length < 3) throw new Error('invalid race length')
+            if (typeof race !== 'string') return 'invalid race type'
+            if (race.length < 3) return 'invalid race length'
 
-            if (typeof colors !== 'object') throw new Error('invalid colors type')
-            if (colors.length < 1) throw new Error('invalid colors length')
+            if (typeof colors !== 'object') return 'invalid colors type'
+            if (colors.length < 1) return 'invalid colors length'
 
             const owner = data.findOwnerById(ownerId)
 
-            if (owner === null) throw new Error('owner of pet not found')
+            if (owner === null) return 'owner of pet not found'
 
             let pet = data.findPetByPassport(passport)
 
-            if (pet !== null) throw new Error('pet already exists')
+            if (pet !== null) return 'pet already exists'
 
             pet = new Pet('pet-' + data.petsCount, ownerId, passport, name, yearOfBirth, species, gender, race, colors)
 
