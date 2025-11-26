@@ -23,14 +23,14 @@ landingRegisterLink.href = ''
 landingAccess.appendChild(landingRegisterLink)
 landingView.appendChild(landingAccess)
 
-landingLoginLink.addEventListener('click', function(event) {
+landingLoginLink.addEventListener('click', function (event) {
     event.preventDefault()
 
     landingView.style.display = 'none'
     loginView.style.display = ''
 })
 
-landingRegisterLink.addEventListener('click', function(event) {
+landingRegisterLink.addEventListener('click', function (event) {
     event.preventDefault()
 
     landingView.style.display = 'none'
@@ -83,17 +83,42 @@ registerSubmitButton.textContent = 'Register'
 registerForm.appendChild(registerSubmitButton)
 registerView.appendChild(registerForm)
 
+registerForm.addEventListener('submit', function (event) {
+    event.preventDefault()
+
+    const name = registerNameInput.value
+    const email = registerEmailInput.value
+    const username = registerUsernameInput.value
+    const password = registerPasswordInput.value
+    const passwordRepeat = registerPasswordRepeatInput.value
+
+    try {
+        logic.registerUser(name, email, username, password, passwordRepeat)
+
+        registerForm.reset()
+        registerFeedback.textContent = ''
+
+        registerView.style.display = 'none'
+        loginView.style.display = ''
+    } catch (error) {
+        registerFeedback.textContent = error.message
+    }
+})
+
 const registerLoginLink = document.createElement('a')
 registerLoginLink.textContent = 'Login'
 registerLoginLink.href = ''
 registerView.appendChild(registerLoginLink)
 
-registerLoginLink.addEventListener('click', function(event) {
+registerLoginLink.addEventListener('click', function (event) {
     event.preventDefault()
 
     registerView.style.display = 'none'
     loginView.style.display = ''
 })
+
+const registerFeedback = document.createElement('p')
+registerView.appendChild(registerFeedback)
 
 document.body.appendChild(registerView)
 
@@ -131,7 +156,7 @@ loginRegisterLink.textContent = 'Register'
 loginRegisterLink.href = ''
 loginView.appendChild(loginRegisterLink)
 
-loginRegisterLink.addEventListener('click', function(event) {
+loginRegisterLink.addEventListener('click', function (event) {
     event.preventDefault()
 
     loginView.style.display = 'none'
