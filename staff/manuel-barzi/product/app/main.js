@@ -10,7 +10,7 @@ const landingWelcome = document.createElement('p')
 landingWelcome.textContent = 'Welcome!'
 landingView.appendChild(landingWelcome)
 
-const landingAccess = document.createElement('p')
+const landingAccess = document.createElement('nav')
 const landingLoginLink = document.createElement('a')
 landingLoginLink.textContent = 'Login'
 landingLoginLink.href = ''
