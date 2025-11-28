@@ -33,6 +33,20 @@ Logic.prototype.registerUser = function (name, email, username, password, passwo
     data.insertUser(user)
 }
 
+Logic.prototype.loginUser = function(username, password) {
+    if (typeof username !== 'string') throw new Error('invalid username type')
+    if (username.length < 3) throw new Error('invalid username length')
+
+    if (typeof password !== 'string') throw new Error('invalid password type')
+    if (password.length < 8) throw new Error('invalid password length')
+
+    const user = data.findUserByUsername(username)
+
+    if (user === null) throw new Error('user not found')
+
+    if (user.password !== password) throw new Error('incorrect password')
+}
+
 // instance
 
 const logic = new Logic()

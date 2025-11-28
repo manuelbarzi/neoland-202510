@@ -151,6 +151,25 @@ loginSubmitButton.textContent = 'Login'
 loginForm.appendChild(loginSubmitButton)
 loginView.appendChild(loginForm)
 
+loginForm.addEventListener('submit', function(event) {
+    event.preventDefault()
+
+    const username = loginUsernameInput.value
+    const password = loginPasswordInput.value
+
+    try {
+        logic.loginUser(username, password)
+
+        loginForm.reset()
+        loginFeedback.textContent = ''
+
+        loginView.style.display = 'none'
+        homeView.style.display = ''
+    } catch(error) {
+        loginFeedback.textContent = error.message
+    }
+})
+
 const loginRegisterLink = document.createElement('a')
 loginRegisterLink.textContent = 'Register'
 loginRegisterLink.href = ''
@@ -163,4 +182,22 @@ loginRegisterLink.addEventListener('click', function (event) {
     registerView.style.display = ''
 })
 
+const loginFeedback = document.createElement('p')
+loginView.appendChild(loginFeedback)
+
 document.body.appendChild(loginView)
+
+// home
+
+const homeView = document.createElement('div')
+homeView.style.display = 'none'
+
+const homeTitle = document.createElement('h1')
+homeTitle.textContent = 'MyPet'
+homeView.appendChild(homeTitle)
+
+const homeSubtitle = document.createElement('h2')
+homeSubtitle.textContent = 'Welcome Home!'
+homeView.appendChild(homeSubtitle)
+
+document.body.appendChild(homeView)
