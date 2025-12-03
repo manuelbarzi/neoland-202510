@@ -1,5 +1,4 @@
 function Logic() {
-
 }
 
 Logic.prototype.registerUser = function (name, email, username, password, passwordRepeat) {
@@ -45,6 +44,12 @@ Logic.prototype.loginUser = function(username, password) {
     if (user === null) throw new Error('user not found')
 
     if (user.password !== password) throw new Error('incorrect password')
+
+    data.setLoggedInUserId(user.id)
+}
+
+Logic.prototype.addPet = function(name, birthdate, weight, image) {
+    // TODO add pet related to logged-in user id
 }
 
 // instance
