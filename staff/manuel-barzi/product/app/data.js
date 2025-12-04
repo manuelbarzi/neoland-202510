@@ -9,16 +9,18 @@ function User(id, name, email, username, password, role) {
     this.role = role
 }
 
-function Pet(id, userId, chip, name, gender, birthdate, species, race, colors) {
+function Pet(id, userId, /*chip,*/ name, /*gender,*/ birthdate, weight, /*species, race, colors,*/ image) {
     this.id = id
     this.userId = userId
-    this.chip = chip
+    // this.chip = chip
     this.name = name
-    this.gender = gender
+    // this.gender = gender
     this.birthdate = birthdate
-    this.species = species
-    this.race = race
-    this.colors = colors
+    this.weight = weight
+    // this.species = species
+    // this.race = race
+    // this.colors = colors
+    this.image = image
 }
 
 // manager

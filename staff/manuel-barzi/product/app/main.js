@@ -398,6 +398,7 @@ addPetForm.appendChild(addPetWeightLabel)
 const addPetWeightInput = document.createElement('input')
 addPetWeightInput.id = 'weight'
 addPetWeightInput.type = 'number'
+addPetWeightInput.step = '0.01'
 addPetWeightInput.className = 'border px-1'
 addPetForm.appendChild(addPetWeightInput)
 const addPetImageLabel = document.createElement('label')
@@ -421,10 +422,23 @@ addPetForm.addEventListener('submit', function(event) {
 
     const name = addPetNameInput.value
     const birthdate = addPetBirthdateInput.value
-    const weight = addPetWeightInput.value
+    const weight = parseFloat(addPetWeightInput.value)
     const image = addPetImageInput.value
 
-    console.log(name, birthdate, weight, image)
+    try {
+        logic.addPet(name, birthdate, weight, image)
+
+        addPetForm.reset()
+        addPetFeedback.textContent = ''
+
+        addPetView.style.display = 'none'
+        homeView.style.display = ''
+    } catch(error) {
+        addPetFeedback.textContent = error.message
+    }
 })
+
+const addPetFeedback = document.createElement('p')
+addPetView.appendChild(addPetFeedback)
 
 document.body.appendChild(addPetView)
