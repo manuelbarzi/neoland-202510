@@ -48,6 +48,10 @@ Logic.prototype.loginUser = function(username, password) {
     data.setLoggedInUserId(user.id)
 }
 
+Logic.prototype.logoutUser = function() {
+    data.setLoggedInUserId(null)
+}
+
 Logic.prototype.addPet = function(name, birthdate, weight, image) {
     // TODO add pet related to logged-in user id
 }

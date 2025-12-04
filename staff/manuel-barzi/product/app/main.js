@@ -322,6 +322,21 @@ homeAddPetButton.addEventListener('click', function(event) {
     addPetView.style.display = ''
 })
 
+const homeLogoutButton = document.createElement('button')
+homeLogoutButton.textContent = 'Logout'
+homeLogoutButton.type = 'button'
+homeLogoutButton.className = 'bg-black text-white px-1'
+homeView.appendChild(homeLogoutButton)
+
+homeLogoutButton.addEventListener('click', function(event) {
+    event.preventDefault()
+
+    logic.logoutUser()
+
+    homeView.style.display = 'none'
+    loginView.style.display = ''
+})
+
 document.body.appendChild(homeView)
 
 // add pet
