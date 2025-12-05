@@ -58,9 +58,14 @@ Data.prototype.findUserByUsername = function(username) {
     return null
 }
 
-Data.prototype.insertPet = function (pet) {
-    this.pets.push(pet)
-    this.petsCount++
+Data.prototype.findUserById = function(id) {
+    for (let i = 0; i < this.users.length; i++) {
+        const user = this.users[i]
+
+        if (user.id === id) return user
+    }
+
+    return null
 }
 
 Data.prototype.setLoggedInUserId = function(userId) {
@@ -69,6 +74,24 @@ Data.prototype.setLoggedInUserId = function(userId) {
 
 Data.prototype.getLoggedInUserId = function() {
     return this.loggedInUserId
+}
+
+Data.prototype.insertPet = function (pet) {
+    this.pets.push(pet)
+    this.petsCount++
+}
+
+Data.prototype.findPetsByUserId = function(userId) {
+    const foundPets = []
+
+    for (let i = 0; i < this.pets.length; i++) {
+        const pet = this.pets[i]
+
+        if (pet.userId === userId) 
+            foundPets.push(pet)
+    }
+
+    return foundPets
 }
 
 // instance
