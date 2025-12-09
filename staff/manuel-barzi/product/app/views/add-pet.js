@@ -21,7 +21,7 @@ addPetBackLink.href = ''
 addPetBackLink.className = 'underline font-bold'
 addPetTopPanel.appendChild(addPetBackLink)
 
-addPetBackLink.addEventListener('click', function(event) {
+addPetBackLink.addEventListener('click', function (event) {
     event.preventDefault()
 
     addPetView.style.display = 'none'
@@ -74,7 +74,7 @@ addPetSubmitButton.className = 'bg-black text-white self-center px-1 mt-4'
 addPetForm.appendChild(addPetSubmitButton)
 addPetView.appendChild(addPetForm)
 
-addPetForm.addEventListener('submit', function(event) {
+addPetForm.addEventListener('submit', function (event) {
     event.preventDefault()
 
     const name = addPetNameInput.value
@@ -88,9 +88,35 @@ addPetForm.addEventListener('submit', function(event) {
         addPetForm.reset()
         addPetFeedback.textContent = ''
 
+        for (let i = homePetList.children.length - 1; i >= 0; i--) {
+            const child = homePetList.children[i]
+
+            homePetList.removeChild(child)
+        }
+
+        const pets = logic.getPets()
+
+        for (let i = 0; i < pets.length; i++) {
+            const pet = pets[i]
+
+            const petItem = document.createElement('li')
+            petItem.className = 'flex'
+
+            const image = document.createElement('img')
+            image.src = pet.image
+            image.className = 'rounded-[50%] w-20'
+            petItem.appendChild(image)
+
+            const name = document.createElement('p')
+            name.textContent = pet.name
+            petItem.appendChild(name)
+
+            homePetList.appendChild(petItem)
+        }
+
         addPetView.style.display = 'none'
         homeView.style.display = ''
-    } catch(error) {
+    } catch (error) {
         addPetFeedback.textContent = error.message
     }
 })

@@ -75,19 +75,19 @@ loginForm.addEventListener('submit', function(event) {
         for (let i = 0; i < pets.length; i++) {
             const pet = pets[i]
 
-            const item = document.createElement('li')
-            item.className = 'flex'
+            const petItem = document.createElement('li')
+            petItem.className = 'flex'
 
             const image = document.createElement('img')
             image.src = pet.image
             image.className = 'rounded-[50%] w-20'
-            item.appendChild(image)
+            petItem.appendChild(image)
 
             const name = document.createElement('p')
             name.textContent = pet.name
-            item.appendChild(name)
+            petItem.appendChild(name)
 
-            homePetList.appendChild(item)
+            homePetList.appendChild(petItem)
         }
 
         loginView.style.display = 'none'
