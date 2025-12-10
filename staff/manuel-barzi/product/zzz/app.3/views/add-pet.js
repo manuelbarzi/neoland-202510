@@ -1,7 +1,7 @@
-const addPetView = createView()
-hideView(addPetView)
+const addPetView = document.createElement('div')
+addPetView.style.display = 'none'
 
-const addPetTitle = createTitle()
+const addPetTitle = document.createElement('h1')
 addPetTitle.textContent = 'MyPet'
 addPetTitle.className = 'font-bold text-xl'
 addPetView.appendChild(addPetTitle)
@@ -24,8 +24,8 @@ addPetTopPanel.appendChild(addPetBackLink)
 addPetBackLink.addEventListener('click', function (event) {
     event.preventDefault()
 
-    hideView(addPetView)
-    showView(homeView)
+    addPetView.style.display = 'none'
+    homeView.style.display = ''
 })
 
 const addPetForm = document.createElement('form')
@@ -88,18 +88,40 @@ addPetForm.addEventListener('submit', function (event) {
         addPetForm.reset()
         addPetFeedback.textContent = ''
 
-        clearHomePetList()
+        for (let i = homePetList.children.length - 1; i >= 0; i--) {
+            const child = homePetList.children[i]
 
-        renderHomePetList()
+            homePetList.removeChild(child)
+        }
 
-        hideView(addPetView)
-        showView(homeView)
+        const pets = logic.getPets()
+
+        for (let i = 0; i < pets.length; i++) {
+            const pet = pets[i]
+
+            const petItem = document.createElement('li')
+            petItem.className = 'flex'
+
+            const image = document.createElement('img')
+            image.src = pet.image
+            image.className = 'rounded-[50%] w-20'
+            petItem.appendChild(image)
+
+            const name = document.createElement('p')
+            name.textContent = pet.name
+            petItem.appendChild(name)
+
+            homePetList.appendChild(petItem)
+        }
+
+        addPetView.style.display = 'none'
+        homeView.style.display = ''
     } catch (error) {
         addPetFeedback.textContent = error.message
     }
 })
 
-const addPetFeedback = createParagraph()
+const addPetFeedback = document.createElement('p')
 addPetView.appendChild(addPetFeedback)
 
 document.body.appendChild(addPetView)

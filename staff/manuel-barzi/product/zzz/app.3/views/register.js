@@ -1,7 +1,7 @@
-const registerView = createView()
-hideView(registerView)
+const registerView = document.createElement('div')
+registerView.style.display = 'none'
 
-const registerTitle = createTitle()
+const registerTitle = document.createElement('h1')
 registerTitle.textContent = 'MyPet'
 registerTitle.className = 'font-bold text-xl'
 registerView.appendChild(registerTitle)
@@ -120,8 +120,8 @@ registerForm.addEventListener('submit', function (event) {
         registerForm.reset()
         registerFeedback.textContent = ''
 
-        hideView(registerView)
-        showView(loginView)
+        registerView.style.display = 'none'
+        loginView.style.display = ''
     } catch (error) {
         registerFeedback.textContent = error.message
     }
@@ -136,11 +136,11 @@ registerView.appendChild(registerLoginLink)
 registerLoginLink.addEventListener('click', function (event) {
     event.preventDefault()
 
-    hideView(registerView)
-    showView(loginView)
+    registerView.style.display = 'none'
+    loginView.style.display = ''
 })
 
-const registerFeedback = createParagraph()
+const registerFeedback = document.createElement('p')
 registerView.appendChild(registerFeedback)
 
 document.body.appendChild(registerView)

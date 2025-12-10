@@ -1,7 +1,7 @@
-const loginView = createView()
-hideView(loginView)
+const loginView = document.createElement('div')
+loginView.style.display = 'none'
 
-const loginTitle = createTitle()
+const loginTitle = document.createElement('h1')
 loginTitle.textContent = 'MyPet'
 loginTitle.className = 'font-bold text-xl'
 loginView.appendChild(loginTitle)
@@ -70,10 +70,28 @@ loginForm.addEventListener('submit', function(event) {
         loginForm.reset()
         loginFeedback.textContent = ''
 
-        renderHomePetList()
+        const pets = logic.getPets()
 
-        hideView(loginView)
-        showView(homeView)
+        for (let i = 0; i < pets.length; i++) {
+            const pet = pets[i]
+
+            const petItem = document.createElement('li')
+            petItem.className = 'flex'
+
+            const image = document.createElement('img')
+            image.src = pet.image
+            image.className = 'rounded-[50%] w-20'
+            petItem.appendChild(image)
+
+            const name = document.createElement('p')
+            name.textContent = pet.name
+            petItem.appendChild(name)
+
+            homePetList.appendChild(petItem)
+        }
+
+        loginView.style.display = 'none'
+        homeView.style.display = ''
     } catch(error) {
         loginFeedback.textContent = error.message
     }
@@ -88,11 +106,11 @@ loginView.appendChild(loginRegisterLink)
 loginRegisterLink.addEventListener('click', function (event) {
     event.preventDefault()
 
-    hideView(loginView)
-    showView(registerView)
+    loginView.style.display = 'none'
+    registerView.style.display = ''
 })
 
-const loginFeedback = createParagraph()
+const loginFeedback = document.createElement('p')
 loginView.appendChild(loginFeedback)
 
 document.body.appendChild(loginView)
