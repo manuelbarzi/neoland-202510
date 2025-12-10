@@ -2,88 +2,92 @@ const loginView = createView()
 hideView(loginView)
 
 const loginTitle = createTitle()
-loginTitle.textContent = 'MyPet'
-loginTitle.className = 'font-bold text-xl'
-loginView.appendChild(loginTitle)
+setTextContent(loginTitle, 'MyPet')
+setClass(loginTitle, 'font-bold text-xl')
+addChild(loginView, loginTitle)
 
-const loginSubtitle = document.createElement('h2')
-loginSubtitle.textContent = 'Login'
-loginSubtitle.className = 'font-bold'
-loginView.appendChild(loginSubtitle)
+const loginSubtitle = createTitle2()
+setTextContent(loginSubtitle, 'Login')
+setClass(loginSubtitle, 'font-bold')
+addChild(loginView, loginSubtitle)
 
-const loginForm = document.createElement('form')
-loginForm.className = 'flex flex-col'
-const loginUsernameLabel = document.createElement('label')
-loginUsernameLabel.textContent = 'Username'
-loginUsernameLabel.htmlFor = 'username'
-loginForm.appendChild(loginUsernameLabel)
-const loginUsernameInput = document.createElement('input')
-loginUsernameInput.id = 'username'
-loginUsernameInput.type = 'text'
-loginUsernameInput.className = 'border px-1'
-loginForm.appendChild(loginUsernameInput)
-const loginPasswordLabel = document.createElement('label')
-loginPasswordLabel.textContent = 'Password'
-loginPasswordLabel.htmlFor = 'password'
-loginForm.appendChild(loginPasswordLabel)
-const loginPasswordInput = document.createElement('input')
-loginPasswordInput.id = 'password'
-loginPasswordInput.type = 'password'
-loginPasswordInput.className = 'border px-1'
-loginForm.appendChild(loginPasswordInput)
-const loginShowPasswordButton = document.createElement('button')
-loginShowPasswordButton.textContent = 'Show'
-loginShowPasswordButton.type = 'button'
-loginShowPasswordButton.className = 'self-end'
-loginForm.appendChild(loginShowPasswordButton)
+const loginForm = createForm()
+setClass(loginForm, 'flex flex-col')
 
-loginShowPasswordButton.addEventListener('click', function(event) {
+const loginUsernameLabel = createLabel()
+setTextContent(loginUsernameLabel, 'Username')
+setFor(loginUsernameLabel, 'username')
+addChild(loginForm, loginUsernameLabel)
+
+const loginUsernameInput = createInput()
+setId(loginUsernameInput, 'username')
+setType(loginUsernameInput, 'text')
+setClass(loginUsernameInput, 'border px-1')
+addChild(loginForm, loginUsernameInput)
+
+const loginPasswordLabel = createLabel()
+setTextContent(loginPasswordLabel, 'Password')
+setFor(loginPasswordLabel, 'password')
+addChild(loginForm, loginPasswordLabel)
+
+const loginPasswordInput = createInput()
+setId(loginPasswordInput, 'password')
+setType(loginPasswordInput, 'password')
+setClass(loginPasswordInput, 'border px-1')
+addChild(loginForm, loginPasswordInput)
+
+const loginShowPasswordButton = createButton()
+setTextContent(loginShowPasswordButton, 'Show')
+setType(loginShowPasswordButton, 'button')
+setClass(loginShowPasswordButton, 'self-end')
+addChild(loginForm, loginShowPasswordButton)
+
+loginShowPasswordButton.addEventListener('click', function (event) {
     event.preventDefault()
 
-    if (loginPasswordInput.type === 'password') {
-        loginPasswordInput.type = 'text'
-        loginShowPasswordButton.textContent = 'Hide'
-        loginPasswordInput.className = 'border px-1 bg-[gold]'
+    if (getType(loginPasswordInput) === 'password') {
+        setType(loginPasswordInput, 'text')
+        setTextContent(loginShowPasswordButton, 'Hide')
+        setClass(loginPasswordInput, 'border px-1 bg-[gold]')
     } else {
-        loginPasswordInput.type = 'password'
-        loginShowPasswordButton.textContent = 'Show'
-        loginPasswordInput.className = 'border px-1'
+        setType(loginPasswordInput, 'password')
+        setTextContent(loginShowPasswordButton, 'Show')
+        setClass(loginPasswordInput, 'border px-1')
     }
 })
 
-const loginSubmitButton = document.createElement('button')
-loginSubmitButton.textContent = 'Login'
-loginSubmitButton.type = 'submit'
-loginSubmitButton.className = 'bg-black text-white px-1 self-center'
-loginForm.appendChild(loginSubmitButton)
-loginView.appendChild(loginForm)
+const loginSubmitButton = createButton()
+setTextContent(loginSubmitButton, 'Login')
+setType(loginSubmitButton, 'submit')
+setClass(loginSubmitButton, 'bg-black text-white px-1 self-center')
+addChild(loginForm, loginSubmitButton)
+addChild(loginView, loginForm)
 
-loginForm.addEventListener('submit', function(event) {
+loginForm.addEventListener('submit', function (event) {
     event.preventDefault()
 
-    const username = loginUsernameInput.value
-    const password = loginPasswordInput.value
+    const username = getValue(loginUsernameInput)
+    const password = getValue(loginPasswordInput)
 
     try {
         logic.loginUser(username, password)
 
-        loginForm.reset()
-        loginFeedback.textContent = ''
+        reset(loginForm)
+        setTextContent(loginFeedback, '')
 
         renderHomePetList()
 
         hideView(loginView)
         showView(homeView)
-    } catch(error) {
-        loginFeedback.textContent = error.message
+    } catch (error) {
+        setTextContent(loginFeedback, error.message)
     }
 })
 
-const loginRegisterLink = document.createElement('a')
-loginRegisterLink.textContent = 'Register'
-loginRegisterLink.href = ''
-loginRegisterLink.className = 'underline font-bold'
-loginView.appendChild(loginRegisterLink)
+const loginRegisterLink = createLink()
+setTextContent(loginRegisterLink, 'Register')
+setClass(loginRegisterLink, 'underline font-bold')
+addChild(loginView, loginRegisterLink)
 
 loginRegisterLink.addEventListener('click', function (event) {
     event.preventDefault()
@@ -93,6 +97,6 @@ loginRegisterLink.addEventListener('click', function (event) {
 })
 
 const loginFeedback = createParagraph()
-loginView.appendChild(loginFeedback)
+addChild(loginView, loginFeedback)
 
-document.body.appendChild(loginView)
+addChild(document.body, loginView)

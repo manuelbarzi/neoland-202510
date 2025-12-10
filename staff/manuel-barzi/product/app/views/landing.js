@@ -1,4 +1,4 @@
-const landingView =  createView()
+const landingView = createView()
 // landingView.style.display = 'none'
 
 const landingTitle = createTitle()
