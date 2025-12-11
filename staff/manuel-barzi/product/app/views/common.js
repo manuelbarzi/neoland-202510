@@ -20,8 +20,16 @@ function removeChild(element, childElement) {
     element.removeChild(childElement)
 }
 
-function setClass(element, clazz) {
-    element.className = clazz
+function setClass(element, value) {
+    element.className = value
+}
+
+function addClass(element, value) {
+    element.classList.add(value)
+}
+
+function removeClass(element, value) {
+    element.classList.remove(value)
 }
 
 function createTextNode(text) {
@@ -60,10 +68,17 @@ function setStep(element, value) {
     element.step = value
 }
 
+function setHref(element, value) {
+    element.href = value
+}
+
 // interface (application specific)
 
 function createView() {
-    return createElement('div')
+    const view  = createElement('div')
+    setClass(view, 'p-4')
+
+    return view
 }
 
 function hideView(view) {
@@ -75,11 +90,17 @@ function showView(view) {
 }
 
 function createTitle() {
-    return createElement('h1')
+    const title = createElement('h1')
+    setClass(title, 'font-bold text-xl')
+
+    return title
 }
 
 function createTitle2() {
-    return createElement('h2')
+    const title2 = createElement('h2')
+    setClass(title2, 'font-bold')
+
+    return title2
 }
 
 function createParagraph() {
@@ -92,7 +113,7 @@ function createNavigation() {
 
 function createLink() {
     const link = createElement('a')
-    link.href = ''
+    setClass(link, 'cursor-pointer underline font-bold')
 
     return link
 }
@@ -110,7 +131,10 @@ function createInput() {
 }
 
 function createButton() {
-    return createElement('button')
+    const button =  createElement('button')
+    setClass(button, 'bg-black text-white px-1')
+
+    return button
 }
 
 function createPanel() {

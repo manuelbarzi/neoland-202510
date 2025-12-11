@@ -3,12 +3,10 @@ hideView(loginView)
 
 const loginTitle = createTitle()
 setTextContent(loginTitle, 'MyPet')
-setClass(loginTitle, 'font-bold text-xl')
 addChild(loginView, loginTitle)
 
 const loginSubtitle = createTitle2()
 setTextContent(loginSubtitle, 'Login')
-setClass(loginSubtitle, 'font-bold')
 addChild(loginView, loginSubtitle)
 
 const loginForm = createForm()
@@ -59,7 +57,7 @@ loginShowPasswordButton.addEventListener('click', function (event) {
 const loginSubmitButton = createButton()
 setTextContent(loginSubmitButton, 'Login')
 setType(loginSubmitButton, 'submit')
-setClass(loginSubmitButton, 'bg-black text-white px-1 self-center')
+addClass(loginSubmitButton, 'self-center')
 addChild(loginForm, loginSubmitButton)
 addChild(loginView, loginForm)
 
@@ -86,7 +84,6 @@ loginForm.addEventListener('submit', function (event) {
 
 const loginRegisterLink = createLink()
 setTextContent(loginRegisterLink, 'Register')
-setClass(loginRegisterLink, 'underline font-bold')
 addChild(loginView, loginRegisterLink)
 
 loginRegisterLink.addEventListener('click', function (event) {

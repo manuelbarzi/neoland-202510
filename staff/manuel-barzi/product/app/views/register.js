@@ -3,12 +3,10 @@ hideView(registerView)
 
 const registerTitle = createTitle()
 setTextContent(registerTitle, 'MyPet')
-setClass(registerTitle, 'font-bold text-xl')
 addChild(registerView, registerTitle)
 
 const registerSubtitle = createTitle2()
 setTextContent(registerSubtitle, 'Register')
-setClass(registerSubtitle, 'font-bold')
 addChild(registerView, registerSubtitle)
 
 const registerForm = createForm()
@@ -112,7 +110,7 @@ registerShowPasswordRepeatButton.addEventListener('click', function (event) {
 const registerSubmitButton = createButton()
 setTextContent(registerSubmitButton, 'Register')
 setType(registerSubmitButton, 'submit')
-setClass(registerSubmitButton, 'bg-black text-white self-center px-1')
+addClass(registerSubmitButton, 'self-center')
 addChild(registerForm, registerSubmitButton)
 addChild(registerView, registerForm)
 
@@ -140,7 +138,6 @@ registerForm.addEventListener('submit', function (event) {
 
 const registerLoginLink = createLink()
 setTextContent(registerLoginLink, 'Login')
-setClass(registerLoginLink, 'underline font-bold')
 addChild(registerView, registerLoginLink)
 
 registerLoginLink.addEventListener('click', function (event) {

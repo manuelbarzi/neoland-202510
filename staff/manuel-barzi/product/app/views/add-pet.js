@@ -3,7 +3,6 @@ hideView(addPetView)
 
 const addPetTitle = createTitle()
 setTextContent(addPetTitle, 'MyPet')
-setClass(addPetTitle, 'font-bold text-xl')
 addChild(addPetView, addPetTitle)
 
 const addPetTopPanel = createPanel()
@@ -12,12 +11,10 @@ addChild(addPetView, addPetTopPanel)
 
 const addPetSubtitle = createTitle2()
 setTextContent(addPetSubtitle, 'Add Pet')
-setClass(addPetSubtitle, 'font-bold')
 addChild(addPetTopPanel, addPetSubtitle)
 
 const addPetBackLink = createLink()
 setTextContent(addPetBackLink, '< Back')
-setClass(addPetBackLink, 'underline font-bold')
 addChild(addPetTopPanel, addPetBackLink)
 
 addPetBackLink.addEventListener('click', function (event) {
@@ -78,7 +75,8 @@ addChild(addPetForm, addPetImageInput)
 const addPetSubmitButton = createButton()
 setTextContent(addPetSubmitButton, 'Add Pet')
 setType(addPetSubmitButton, 'submit')
-setClass(addPetSubmitButton, 'bg-black text-white self-center px-1 mt-4')
+addClass(addPetSubmitButton, 'self-center')
+addClass(addPetSubmitButton, 'mt-4')
 addChild(addPetForm, addPetSubmitButton)
 
 addChild(addPetView, addPetForm)
