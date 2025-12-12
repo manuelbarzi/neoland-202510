@@ -36,6 +36,7 @@ homeLogoutButton.addEventListener('click', function (event) {
     logic.logoutUser()
 
     clearHomePetList()
+    setTextContent(homeFeedback, '')
 
     hideView(homeView)
     showView(loginView)
@@ -46,6 +47,8 @@ addChild(homeView, homePetList)
 setClass(homePetList, 'flex flex-col gap-2 mt-2')
 
 addChild(document.body, homeView)
+
+let selectedPetId = null
 
 const homeDeletePanel = createPanel()
 hideView(homeDeletePanel)
@@ -77,10 +80,31 @@ const homeDeleteConfirmButton = createButton()
 setTextContent(homeDeleteConfirmButton, '✅')
 addChild(homeDeleteButtonsPanel, homeDeleteConfirmButton)
 
+homeDeleteConfirmButton.addEventListener('click', function(event) {
+    event.preventDefault()
+
+    try {
+        logic.deletePet(selectedPetId)
+
+        clearHomePetList()
+        renderHomePetList()
+
+        hideView(homeDeletePanel)
+    } catch(error) {
+        setTextContent(homeFeedback, error.message)
+        
+        hideView(homeDeletePanel)
+    }
+})
+
 addChild(homeDeleteConfirmPanel, homeDeleteButtonsPanel)
 
 addChild(homeDeletePanel, homeDeleteConfirmPanel)
 
+const homeFeedback = createParagraph()
+addChild(homeView, homeFeedback)
+
+// reusable functions
 
 function renderHomePetList() {
     const pets = logic.getPets()
@@ -112,6 +136,8 @@ function renderHomePetList() {
 
         deleteButton.addEventListener('click', function(event) {
             event.preventDefault()
+
+            selectedPetId = pet.id
 
             showView(homeDeletePanel)
         })
