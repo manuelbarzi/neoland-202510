@@ -3,12 +3,12 @@ const root = ReactDOM.createRoot(rootElement)
 
 // landing
 
-const landingTitle = React.createElement('h1', null, 'MyPet')
+const landingTitle = React.createElement('h1', { children: 'MyPet' })
 
-const landingWelcome = React.createElement('p', null, 'Welcome!')
+const landingWelcome = React.createElement('p', { children: 'Welcome!' })
 
-const landingLoginLink = React.createElement('a', { href: '' }, 'Login')
-const landingRegisterLink = React.createElement('a', { href: '' }, 'Register')
+const landingLoginLink = React.createElement('a', { href: '', children: 'Login' })
+const landingRegisterLink = React.createElement('a', { href: '', children: 'Register' })
 
 const landingNavigation = React.createElement('nav', null, [landingLoginLink, ' or ', landingRegisterLink])
 
