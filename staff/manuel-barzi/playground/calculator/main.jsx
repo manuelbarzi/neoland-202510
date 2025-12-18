@@ -11,69 +11,99 @@ function App() {
     const handleOneClicked = () => {
         if (displayValue === '0')
             setDisplayValue('1')
-        else
-            setDisplayValue(displayValue + '1')
+        else {
+            const newValue = displayValue + '1'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleTwoClicked = () => {
         if (displayValue === '0')
             setDisplayValue('2')
-        else
-            setDisplayValue(displayValue + '2')
+        else {
+            const newValue = displayValue + '2'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleThreeClicked = () => {
         if (displayValue === '0')
             setDisplayValue('3')
-        else
-            setDisplayValue(displayValue + '3')
+        else {
+            const newValue = displayValue + '3'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleFourClicked = () => {
         if (displayValue === '0')
             setDisplayValue('4')
-        else
-            setDisplayValue(displayValue + '4')
+        else {
+            const newValue = displayValue + '4'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleFiveClicked = () => {
         if (displayValue === '0')
             setDisplayValue('5')
-        else
-            setDisplayValue(displayValue + '5')
+        else {
+            const newValue = displayValue + '5'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleSixClicked = () => {
         if (displayValue === '0')
             setDisplayValue('6')
-        else
-            setDisplayValue(displayValue + '6')
+        else {
+            const newValue = displayValue + '6'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleSevenClicked = () => {
         if (displayValue === '0')
             setDisplayValue('7')
-        else
-            setDisplayValue(displayValue + '7')
+        else {
+            const newValue = displayValue + '7'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleEightClicked = () => {
         if (displayValue === '0')
             setDisplayValue('8')
-        else
-            setDisplayValue(displayValue + '8')
+        else {
+            const newValue = displayValue + '8'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleNineClicked = () => {
         if (displayValue === '0')
             setDisplayValue('9')
-        else
-            setDisplayValue(displayValue + '9')
+        else {
+            const newValue = displayValue + '9'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleZeroClicked = () => {
-        if (displayValue !== '0')
-            setDisplayValue(displayValue + '0')
+        if (displayValue !== '0') {
+            const newValue = displayValue + '0'
+
+            setDisplayValue(newValue)
+        }
     }
 
     const handleAllClearClicked = () => setDisplayValue('0')
@@ -91,7 +121,46 @@ function App() {
 
         const result = eval(operation)
 
-        setDisplayValue(String(result))        
+        const newValue = String(result)
+
+        setDisplayValue(newValue)
+    }
+
+    const handleBackspaceClicked = () => {
+        if (displayValue.length === 1) {
+            if (displayValue === '0')
+                return
+            else
+                setDisplayValue('0')
+        } else {
+            const newValue = displayValue.slice(0, displayValue.length - 1)
+
+            setDisplayValue(newValue)
+        }
+    }
+
+    const handleCommaClicked = () => {
+        const lastCharacter = displayValue.at(-1)
+
+        if (lastCharacter === ',') return
+
+        const lastIndexOfDivide = displayValue.lastIndexOf('÷')
+        const lastIndexOfMultiply = displayValue.lastIndexOf('×')
+        const lastIndexOfSubtract = displayValue.lastIndexOf('-')
+        const lastIndexOfAdd = displayValue.lastIndexOf('+')
+
+        const lastIndexOfOperation = Math.max(lastIndexOfDivide, lastIndexOfMultiply, lastIndexOfSubtract, lastIndexOfAdd)
+
+        const lastIndex = displayValue.length - 1
+
+        let newValue
+
+        if (lastIndexOfOperation === lastIndex)
+            newValue = displayValue + '0,'
+        else
+            newValue = displayValue + ',' // TODO avoid comma on last number with comma
+
+        setDisplayValue(newValue)
     }
 
     console.log('App -> render')
@@ -101,7 +170,7 @@ function App() {
 
         <div className="p-2 flex flex-col gap-2">
             <div className="flex justify-between">
-                <div className="bg-gray-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer">⌫</div>
+                <div className="bg-gray-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleBackspaceClicked}>⌫</div>
                 <div className="bg-gray-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleAllClearClicked}>AC</div>
                 <div className="bg-gray-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer">%</div>
                 <div className="bg-orange-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleDivideClicked}>÷</div>
@@ -127,7 +196,7 @@ function App() {
             <div className="flex justify-between">
                 <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer">+/-</div>
                 <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleZeroClicked}>0</div>
-                <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer">,</div>
+                <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleCommaClicked}>,</div>
                 <div className="bg-orange-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleResultClicked}>=</div>
             </div>
         </div>
