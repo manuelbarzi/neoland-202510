@@ -157,10 +157,95 @@ function App() {
 
         if (lastIndexOfOperation === lastIndex)
             newValue = displayValue + '0,'
-        else
-            newValue = displayValue + ',' // TODO avoid comma on last number with comma
+        else if (lastIndexOfOperation === -1) {
+            if (displayValue.includes(',')) return
+
+            newValue = displayValue + ','
+        } else {
+            const lastOperand = displayValue.slice(lastIndexOfOperation + 1)
+
+            if (lastOperand.includes(',')) return
+
+            newValue = displayValue + ','
+        }
 
         setDisplayValue(newValue)
+    }
+
+    const handleChangeSignClicked = () => {
+        /*
+        const lastIndexOfDivide = displayValue.lastIndexOf('÷')
+        const lastIndexOfMultiply = displayValue.lastIndexOf('×')
+        const lastIndexOfSubtract = displayValue.lastIndexOf('-')
+        const lastIndexOfAdd = displayValue.lastIndexOf('+')
+
+        const lastIndexOfOperation = Math.max(lastIndexOfDivide, lastIndexOfMultiply, lastIndexOfSubtract, lastIndexOfAdd)
+
+        let newValue
+
+        if (lastIndexOfOperation === -1) {
+            if (displayValue === '0') return
+
+            if (!displayValue.includes('(')) {
+                newValue = '(-' + displayValue + ')'
+            } else {
+                const operand = displayValue.slice(2, displayValue.length - 1)
+
+                newValue = operand
+            }
+        }
+
+        setDisplayValue(newValue)
+        */
+
+        const operands = []
+        const operators = []
+
+        let operand = ''
+
+       for (let i = 0; i < displayValue.length; i++) {
+            const char = displayValue[i]
+            const prevChar = displayValue[i - 1]
+
+            if (char === '-' && prevChar !== '(' || char === '+' || char === '÷' || char === '×') {
+                operands.push(operand)
+                operators.push(char)
+                operand = ''
+            } else {
+                operand += char
+
+                if (i === displayValue.length - 1)
+                    operands.push(operand)
+            }
+       }
+
+       if (operands.length === operators.length) return
+
+       let lastOperand = operands.at(-1)
+
+       if (lastOperand === '0') return
+
+       if (lastOperand.includes('('))
+            lastOperand = lastOperand.slice(2, -1)
+        else 
+            lastOperand = '(-' + lastOperand + ')'
+
+        operands[operands.length - 1] = lastOperand
+
+       let newValue = ''
+
+       for (let i = 0; i < operands.length; i++) {
+            const operand = operands[i]
+
+            newValue += operand
+
+            const operator = operators[i]
+
+            if (operator)
+                newValue += operator            
+       }
+
+       setDisplayValue(newValue)
     }
 
     console.log('App -> render')
@@ -194,7 +279,7 @@ function App() {
                 <div className="bg-orange-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleAddClicked}>+</div>
             </div>
             <div className="flex justify-between">
-                <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer">+/-</div>
+                <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleChangeSignClicked}>+/-</div>
                 <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleZeroClicked}>0</div>
                 <div className="bg-gray-600 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleCommaClicked}>,</div>
                 <div className="bg-orange-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" onClick={handleResultClicked}>=</div>
