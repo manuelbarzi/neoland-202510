@@ -9,243 +9,117 @@ function App() {
     const setDisplayValue = displayState[1]
 
     const handleOneClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('1')
-        else {
-            const newValue = displayValue + '1'
+        logic.selectOne()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleTwoClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('2')
-        else {
-            const newValue = displayValue + '2'
+        logic.selectTwo()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleThreeClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('3')
-        else {
-            const newValue = displayValue + '3'
+        logic.selectThree()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleFourClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('4')
-        else {
-            const newValue = displayValue + '4'
+        logic.selectFour()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleFiveClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('5')
-        else {
-            const newValue = displayValue + '5'
+        logic.selectFive()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleSixClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('6')
-        else {
-            const newValue = displayValue + '6'
+        logic.selectSix()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleSevenClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('7')
-        else {
-            const newValue = displayValue + '7'
+        logic.selectSeven()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleEightClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('8')
-        else {
-            const newValue = displayValue + '8'
+        logic.selectEight()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleNineClicked = () => {
-        if (displayValue === '0')
-            setDisplayValue('9')
-        else {
-            const newValue = displayValue + '9'
+        logic.selectNine()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleZeroClicked = () => {
-        if (displayValue !== '0') {
-            const newValue = displayValue + '0'
+        logic.selectZero()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
-    const handleAllClearClicked = () => setDisplayValue('0')
+    const handleAllClearClicked = () => {
+        logic.clearAll()
 
-    const handleDivideClicked = () => setDisplayValue(displayValue + '÷')
+        setDisplayValue(logic.getCurrentValue())
+    }
 
-    const handleMultiplyClicked = () => setDisplayValue(displayValue + '×')
+    const handleDivideClicked = () => {
+        logic.selectDivide()
 
-    const handleSubtractClicked = () => setDisplayValue(displayValue + '-')
+        setDisplayValue(logic.getCurrentValue())
+    }
 
-    const handleAddClicked = () => setDisplayValue(displayValue + '+')
+    const handleMultiplyClicked = () => {
+        logic.selectMultiply()
+
+        setDisplayValue(logic.getCurrentValue())
+    }
+
+    const handleSubtractClicked = () => {
+        logic.selectSubtract()
+
+        setDisplayValue(logic.getCurrentValue())
+    }
+
+    const handleAddClicked = () => {
+        logic.selectAdd()
+
+        setDisplayValue(logic.getCurrentValue())
+    }
 
     const handleResultClicked = () => {
-        const operation = displayValue.replaceAll('÷', '/').replaceAll('×', '*')
+        logic.calculate()
 
-        const result = eval(operation)
-
-        const newValue = String(result)
-
-        setDisplayValue(newValue)
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleBackspaceClicked = () => {
-        if (displayValue.length === 1) {
-            if (displayValue === '0')
-                return
-            else
-                setDisplayValue('0')
-        } else {
-            const newValue = displayValue.slice(0, displayValue.length - 1)
+        logic.selectBackspace()
 
-            setDisplayValue(newValue)
-        }
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleCommaClicked = () => {
-        const lastCharacter = displayValue.at(-1)
+        logic.selectComma()
 
-        if (lastCharacter === ',') return
-
-        const lastIndexOfDivide = displayValue.lastIndexOf('÷')
-        const lastIndexOfMultiply = displayValue.lastIndexOf('×')
-        const lastIndexOfSubtract = displayValue.lastIndexOf('-')
-        const lastIndexOfAdd = displayValue.lastIndexOf('+')
-
-        const lastIndexOfOperation = Math.max(lastIndexOfDivide, lastIndexOfMultiply, lastIndexOfSubtract, lastIndexOfAdd)
-
-        const lastIndex = displayValue.length - 1
-
-        let newValue
-
-        if (lastIndexOfOperation === lastIndex)
-            newValue = displayValue + '0,'
-        else if (lastIndexOfOperation === -1) {
-            if (displayValue.includes(',')) return
-
-            newValue = displayValue + ','
-        } else {
-            const lastOperand = displayValue.slice(lastIndexOfOperation + 1)
-
-            if (lastOperand.includes(',')) return
-
-            newValue = displayValue + ','
-        }
-
-        setDisplayValue(newValue)
+        setDisplayValue(logic.getCurrentValue())
     }
 
     const handleChangeSignClicked = () => {
-        /*
-        const lastIndexOfDivide = displayValue.lastIndexOf('÷')
-        const lastIndexOfMultiply = displayValue.lastIndexOf('×')
-        const lastIndexOfSubtract = displayValue.lastIndexOf('-')
-        const lastIndexOfAdd = displayValue.lastIndexOf('+')
+        logic.changeSign()
 
-        const lastIndexOfOperation = Math.max(lastIndexOfDivide, lastIndexOfMultiply, lastIndexOfSubtract, lastIndexOfAdd)
-
-        let newValue
-
-        if (lastIndexOfOperation === -1) {
-            if (displayValue === '0') return
-
-            if (!displayValue.includes('(')) {
-                newValue = '(-' + displayValue + ')'
-            } else {
-                const operand = displayValue.slice(2, displayValue.length - 1)
-
-                newValue = operand
-            }
-        }
-
-        setDisplayValue(newValue)
-        */
-
-        const operands = []
-        const operators = []
-
-        let operand = ''
-
-       for (let i = 0; i < displayValue.length; i++) {
-            const char = displayValue[i]
-            const prevChar = displayValue[i - 1]
-
-            if (char === '-' && prevChar !== '(' || char === '+' || char === '÷' || char === '×') {
-                operands.push(operand)
-                operators.push(char)
-                operand = ''
-            } else {
-                operand += char
-
-                if (i === displayValue.length - 1)
-                    operands.push(operand)
-            }
-       }
-
-       if (operands.length === operators.length) return
-
-       let lastOperand = operands.at(-1)
-
-       if (lastOperand === '0') return
-
-       if (lastOperand.includes('('))
-            lastOperand = lastOperand.slice(2, -1)
-        else 
-            lastOperand = '(-' + lastOperand + ')'
-
-        operands[operands.length - 1] = lastOperand
-
-       let newValue = ''
-
-       for (let i = 0; i < operands.length; i++) {
-            const operand = operands[i]
-
-            newValue += operand
-
-            const operator = operators[i]
-
-            if (operator)
-                newValue += operator            
-       }
-
-       setDisplayValue(newValue)
+        setDisplayValue(logic.getCurrentValue())
     }
 
     console.log('App -> render')
