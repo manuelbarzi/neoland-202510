@@ -10,33 +10,39 @@ function App() {
     const messages = messagesState[0]
     const setMessages = messagesState[1]
 
+    const handleTitleClick = event => {
+        event.preventDefault()
+
+        console.log('title clicked')
+    }
+
     const handleMessageSubmit = event => {
         event.preventDefault()
 
         const form = event.target
 
-        const name = form.name.value
         const message = form.message.value
+        const name = form.name.value
 
-        try {
-            logic.addMessage(name, message)
+        const date = new Date()
+        const newMessage = message + ' (' + name + ', ' + date.toLocaleDateString() + ')'
 
-            form.reset()
+        // WARN! this is not the way in react
+        // messages.push(newMessage) 
 
-            const messages = logic.getAllMessages()
+        const newMessages = []
 
-            const newMessages = []
+        for (let i = 0; i < messages.length; i++) {
+            const message = messages[i]
 
-            for (let i = 0; i < messages.length; i++) {
-                const message = messages[i]
-
-                newMessages.push(message)
-            } 
-
-            setMessages(newMessages)
-        } catch(error) {
-            console.error(error)
+            newMessages.push(message)
         }
+
+        newMessages.push(newMessage)
+
+        setMessages(newMessages)
+
+        form.reset()
     }
 
     console.log('App -> render')
@@ -46,17 +52,15 @@ function App() {
     for (let i = 0; i < messages.length; i++) {
         const message = messages[i]
 
-        const messageString = message.text + '(' + message.author + ', ' + message.date + ')'
-
         const listItem = <li>
-            <p>{messageString}</p>
+            <p>{message}</p>
         </li>
 
         listItems.push(listItem)
     }
 
     return <div className="flex flex-col gap-2 p-2">
-        <h1 className="text-3xl cursor-pointer">Wall</h1>
+        <h1 className="text-3xl cursor-pointer" onClick={handleTitleClick}>Wall</h1>
 
         <ul className="p-2">
             {listItems}
