@@ -6,11 +6,11 @@ class Data {
 
     insertIssue(issue) {
         this.issues.push(issue)
-        data.issuesCount++
+        this.issuesCount++
     }
 
     getIssues() {
-        return data.issues
+        return this.issues
     }
 }
 
