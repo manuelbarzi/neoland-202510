@@ -20,14 +20,6 @@ class Logic {
     getAllIssues() {
         return data.getIssues()
     }
-
-    closeIssue(issueId) {
-        const issue = data.findIssueById(issueId)
-
-        if (!issue) throw new Error('issue not found')
-
-        issue.status = 'closed'
-    }
 }
 
 // instance
