@@ -4,7 +4,6 @@ root.render(<App />)
 
 const { useState, useRef } = React
 
-
 function App() {
     console.log('App -> call')
 
@@ -85,8 +84,10 @@ function App() {
 
             setView('login')
             setMessage('')
+            setPasswordType('password')
+            setPasswordRepeatType('password')
         } catch (error) {
-            setMessage(message)
+            setMessage(error.message)
         }
     }
 
@@ -109,6 +110,8 @@ function App() {
             logic.logoutUser()
 
             setView('login')
+            setMessage('')
+            setPets([])
         } catch(error) {
             setMessage('sorry, there was an error on logout, please, try it later')
         }
