@@ -14,9 +14,12 @@ function App() {
     const [pets, setPets] = useState([])
     const [petId, setPetId] = useState(null)
 
+    const loginFormRef = useRef()
     const registerFormRef = useRef()
 
-    const handleLoginClick = () => {
+    const handleLoginClick = event => {
+        event.preventDefault()
+
         if (registerFormRef.current)
             registerFormRef.current.reset()
 
@@ -26,15 +29,31 @@ function App() {
         setPasswordRepeatType('password')
     }
 
-    const handleRegisterClick = () => {
+    const handleRegisterClick = event => {
+        event.preventDefault()
+
+        if (loginFormRef.current)
+            loginFormRef.current.reset()
+
         setView('register')
         setMessage('')
         setPasswordType('password')
         setPasswordRepeatType('password')
     }
 
-    const handleLogin = () => {
+    const handleLoginSubmit = event => {
+        event.preventDefault()
+
+        const form = event.target
+
+        const username = form.username.value
+        const password = form.password.value
+
         try {
+            logic.loginUser(username, password)
+
+            form.reset()
+
             const pets = logic.getPets()
 
             setView('home')
@@ -169,11 +188,37 @@ function App() {
 
     // landing
     if (view === 'landing')
-        return <Landing onLoginClick={handleLoginClick} onRegisterClick={handleRegisterClick} />
+        return <div className="p-4">
+            <h1 className="font-bold text-xl">MyPet</h1>
+            <p>Welcome!</p>
+
+            <nav>
+                <a className="cursor-pointer underline font-bold" onClick={handleLoginClick}>Login</a> or <a className="cursor-pointer underline font-bold" onClick={handleRegisterClick}>Register</a>
+            </nav>
+        </div>
 
     // login
     if (view === 'login')
-        return <Login onLogin={handleLogin} onRegisterClick={handleRegisterClick} />
+        return <div className="p-4">
+            <h1 className="font-bold text-xl">MyPet</h1>
+
+            <h2 className="font-bold">Login</h2>
+
+            <form className="flex flex-col" onSubmit={handleLoginSubmit} ref={loginFormRef}>
+                <label htmlFor="username">Username</label>
+                <input id="username" name="username" autoComplete="username" type="text" className="border px-1" />
+
+                <label htmlFor="password">Password</label>
+                <input id="password" name="password" autoComplete="off" type={passwordType} className={passwordType === 'password' ? 'border px-1' : 'border px-1 bg-[gold]'} />
+                <button className="self-end" type="button" onClick={handleTogglePasswordClick}>{passwordType === 'password' ? 'Show' : 'Hide'}</button>
+
+                <button className="bg-black text-white px-1 self-center" type="submit">Login</button>
+            </form>
+
+            <a className="cursor-pointer underline font-bold" onClick={handleRegisterClick}>Register</a>
+
+            <p>{message}</p>
+        </div>
 
     // register
     if (view === 'register')
