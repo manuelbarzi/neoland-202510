@@ -2,35 +2,25 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(<App />)
 
-const { useState, useRef } = React
+const { useState } = React
 
 function App() {
     console.log('App -> call')
 
     const [view, setView] = useState('landing')
     const [message, setMessage] = useState('')
-    const [passwordType, setPasswordType] = useState('password')
-    const [passwordRepeatType, setPasswordRepeatType] = useState('password')
+
     const [pets, setPets] = useState([])
     const [petId, setPetId] = useState(null)
 
-    const registerFormRef = useRef()
-
     const handleLoginClick = () => {
-        if (registerFormRef.current)
-            registerFormRef.current.reset()
-
         setView('login')
         setMessage('')
-        setPasswordType('password')
-        setPasswordRepeatType('password')
     }
 
     const handleRegisterClick = () => {
         setView('register')
         setMessage('')
-        setPasswordType('password')
-        setPasswordRepeatType('password')
     }
 
     const handleLogin = () => {
@@ -39,49 +29,15 @@ function App() {
 
             setView('home')
             setMessage('')
-            setPasswordType('password')
-            setPasswordRepeatType('password')
             setPets(pets)
         } catch (error) {
             setMessage(error.message)
         }
     }
 
-    const handleRegisterSubmit = event => {
-        event.preventDefault()
-
-        const form = event.target
-
-        const name = form.name.value
-        const email = form.email.value
-        const username = form.username.value
-        const password = form.password.value
-        const passwordRepeat = form.passwordRepeat.value
-
-        try {
-            logic.registerUser(name, email, username, password, passwordRepeat)
-
-            form.reset()
-
-            setView('login')
-            setMessage('')
-            setPasswordType('password')
-            setPasswordRepeatType('password')
-        } catch (error) {
-            setMessage(error.message)
-        }
-    }
-
-    const handleTogglePasswordClick = event => {
-        event.preventDefault()
-
-        setPasswordType(passwordType === 'password' ? 'text' : 'password')
-    }
-
-    const handleTogglePasswordRepeatClick = event => {
-        event.preventDefault()
-
-        setPasswordRepeatType(passwordRepeatType === 'password' ? 'text' : 'password')
+    const handleRegister = () => {
+        setView('login')
+        setMessage('')
     }
 
     const handleLogoutClick = event => {
@@ -93,7 +49,7 @@ function App() {
             setView('login')
             setMessage('')
             setPets([])
-        } catch(error) {
+        } catch (error) {
             setMessage('sorry, there was an error on logout, please, try it later')
         }
     }
@@ -129,7 +85,7 @@ function App() {
 
             setView('home')
             setPets(pets)
-        } catch(error) {
+        } catch (error) {
             setMessage(error.message)
         }
     }
@@ -160,7 +116,7 @@ function App() {
 
             setPetId(null)
             setPets(pets)
-        } catch(error) {
+        } catch (error) {
             setMessage(error.message)
         }
     }
@@ -177,36 +133,7 @@ function App() {
 
     // register
     if (view === 'register')
-        return <div className="p-4">
-            <h1 className="font-bold text-xl">MyPet</h1>
-
-            <h2 className="font-bold">Register</h2>
-
-            <form className="flex flex-col" onSubmit={handleRegisterSubmit} ref={registerFormRef}>
-                <label htmlFor="name">Name</label>
-                <input id="name" name="name" autoComplete="name" type="text" className="border px-1" />
-
-                <label htmlFor="email">Email</label>
-                <input id="email" name="email" autoComplete="email" type="email" className="border px-1" />
-
-                <label htmlFor="username">Username</label>
-                <input id="username" name="username" autoComplete="username" type="text" className="border px-1" />
-
-                <label htmlFor="password">Password</label>
-                <input id="password" name="password" autoComplete="off" type={passwordType} className={passwordType === 'password' ? 'border px-1' : 'border px-1 bg-[gold]'} />
-                <button className="self-end" type="button" onClick={handleTogglePasswordClick}>{passwordType === 'password' ? 'Show' : 'Hide'}</button>
-
-                <label htmlFor="passwordRepeat">Repeat Password</label>
-                <input id="passwordRepeat" name="passwordRepeat" autoComplete="off" type={passwordRepeatType} className={passwordRepeatType === 'password' ? 'border px-1' : 'border px-1 bg-[gold]'} />
-                <button className="self-end" type="button" onClick={handleTogglePasswordRepeatClick}>{passwordRepeatType === 'password' ? 'Show' : 'Hide'}</button>
-
-                <button className="bg-black text-white px-1 self-center" type="submit">Register</button>
-            </form>
-
-            <a className="cursor-pointer underline font-bold" onClick={handleLoginClick}>Login</a>
-
-            <p>{message}</p>
-        </div>
+        return <Register onRegister={handleRegister} onLoginClick={handleLoginClick} />
 
     // home
     if (view === 'home') {
