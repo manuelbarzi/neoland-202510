@@ -1,3 +1,5 @@
+const { useState } = React
+
 function Register({ onRegister, onLoginClick }) {
     console.log('Register -> call')
 
