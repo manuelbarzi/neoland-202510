@@ -61,7 +61,8 @@ function PetList() {
 
                 <p>{pet.name}</p>
             </div>
-            <button id={pet.id} className="bg-black text-white px-1 justify-self-end" onClick={handleDeletePetClick}>🗑️</button>
+
+            <Button id={pet.id} className="justify-self-end" onClick={handleDeletePetClick}>🗑️</Button>
         </li>
 
         petItems.push(petItem)
@@ -77,7 +78,8 @@ function PetList() {
                 <p className="text-center">Delete Pet?</p>
 
                 <div className="flex justify-center gap-2">
-                    <button className="bg-black text-white px-1" onClick={handleCancelDeletePetClick}>❌</button> <button className="bg-black text-white px-1" onClick={handleConfirmDeletePetClick}>✅</button>
+                    <Button onClick={handleCancelDeletePetClick}>❌</Button>
+                    <Button onClick={handleConfirmDeletePetClick}>✅</Button>
                 </div>
             </div>
         </div>}

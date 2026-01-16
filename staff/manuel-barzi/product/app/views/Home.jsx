@@ -33,8 +33,8 @@ function Home({ onGoToAddPet, onGoToLogin }) {
         <h2 className="font-bold">Welcome Home!</h2>
 
         <div className="flex justify-between">
-            <button className="bg-black text-white px-1" type="button" onClick={handleAddPetClick}>+ Pet</button>
-            <button className="bg-black text-white px-1" type="button" onClick={handleLogoutClick}>Logout</button>
+            <Button type="button" onClick={handleAddPetClick}>+ Pet</Button>
+            <Button type="button" onClick={handleLogoutClick}>Logout</Button>
         </div>
 
         <PetList />
