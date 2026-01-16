@@ -1,6 +1,6 @@
 const { useState } = React
 
-function AddPet({ onBackClick, onAddPet }) {
+function AddPet({ onGoToHome }) {
     console.log('AddPet -> call')
 
     const [message, setMessage] = useState('')
@@ -8,7 +8,7 @@ function AddPet({ onBackClick, onAddPet }) {
     const handleBackClick = event => {
         event.preventDefault()
 
-        onBackClick()   
+        onGoToHome()   
     }
 
     const handleAddPetSubmit = event => {
@@ -26,7 +26,7 @@ function AddPet({ onBackClick, onAddPet }) {
 
             form.reset()
 
-            onAddPet()
+            onGoToHome()
         } catch (error) {
             setMessage(error.message)
         }

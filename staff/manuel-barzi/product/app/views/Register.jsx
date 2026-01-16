@@ -1,6 +1,6 @@
 const { useState } = React
 
-function Register({ onRegister, onLoginClick }) {
+function Register({ onGoToLogin }) {
     console.log('Register -> call')
 
     const [message, setMessage] = useState('')
@@ -27,7 +27,7 @@ function Register({ onRegister, onLoginClick }) {
             setPasswordType('password')
             setPasswordRepeatType('password')
 
-            onRegister()
+            onGoToLogin()
         } catch (error) {
             setMessage(error.message)
         }
@@ -48,7 +48,7 @@ function Register({ onRegister, onLoginClick }) {
     const handleLoginClick = event => {
         event.preventDefault()
 
-        onLoginClick()
+        onGoToLogin()
     }
 
     console.log('Register -> render')

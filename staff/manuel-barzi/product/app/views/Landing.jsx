@@ -1,22 +1,16 @@
-// function Landing(props) {
-function Landing({ onLoginClick, onRegisterClick }) {
+function Landing({ onGoToLogin, onGoToRegister }) {
     console.log('Landing -> call')
-
-    //const onLoginClick = props.onLoginClick
-    //const onRegisterClick = props.onRegisterClick
-
-    // const { onLoginClick, onRegisterClick } = props
 
     const handleLoginClick = event => {
         event.preventDefault()
 
-        onLoginClick()
+        onGoToLogin()
     }
 
     const handleRegisterClick = event => {
         event.preventDefault()
 
-        onRegisterClick()
+        onGoToRegister()
     }
 
     console.log('Landing -> render')

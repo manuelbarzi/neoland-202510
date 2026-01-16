@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-function Home({ onAddPetClick, onLogout }) {
+function Home({ onGoToAddPet, onGoToLogin }) {
     console.log('Home -> call')
 
     const [message, setMessage] = useState('')
@@ -8,6 +8,8 @@ function Home({ onAddPetClick, onLogout }) {
     const [petId, setPetId] = useState(null)
 
     useEffect(() => {
+        console.log('Home -> useEffect')
+
         try {
             const pets = logic.getPets()
 
@@ -30,7 +32,7 @@ function Home({ onAddPetClick, onLogout }) {
     const handleAddPetClick = event => {
         event.preventDefault()
 
-        onAddPetClick()
+        onGoToAddPet()
     }
 
     const handleLogoutClick = event => {
@@ -42,7 +44,7 @@ function Home({ onAddPetClick, onLogout }) {
             setMessage('')
             setPets([])
 
-            onLogout()
+            onGoToLogin()
         } catch (error) {
             setMessage('sorry, there was an error on logout, please, try it later')
         }
