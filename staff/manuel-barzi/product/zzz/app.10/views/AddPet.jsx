@@ -40,7 +40,7 @@ function AddPet({ onGoToHome }) {
             <div className="flex justify-between">
                 <h2 className="font-bold">Add Pet</h2>
 
-                <Anchor onClick={handleBackClick}>&lt; Back</Anchor>
+                <a className="cursor-pointer underline font-bold" onClick={handleBackClick}>&lt; Back</a>
             </div>
 
             <Form onSubmit={handleAddPetSubmit}>
