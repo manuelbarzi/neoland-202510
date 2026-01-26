@@ -276,3 +276,45 @@ const { assert } = console
 }
 
 // TODO add CASE of find with all arguments in callback
+
+// TEST reduce
+
+// CASE reduce cart total
+{
+    const cart = new Collection()
+    cart[0] = { brand: 'Asturiana', model: 'Premum 1.5l', price: 1.70 }
+    cart[1] = { brand: 'Veritas', model: 'Copos finos avena 4kg', price: 4.50 }
+    cart[2] = { brand: 'Veritas', model: 'Vinagre de manzana 1l', price: 2.70 }
+    cart.count = 3
+
+    const total = cart.reduce((accum, item) => accum + item.price, 0)
+
+    assert(total === 8.90, 'total is 8.90')
+}
+
+// CASE reduce cart explanation
+{
+    const cart = new Collection()
+    cart[0] = { brand: 'Asturiana', model: 'Premium 1.5l', price: 1.70 }
+    cart[1] = { brand: 'Veritas', model: 'Copos finos avena 4kg', price: 4.50 }
+    cart[2] = { brand: 'Veritas', model: 'Vinagre de manzana 1l', price: 2.70 }
+    cart.count = 3
+
+    const explanation = cart.reduce((accum, item, index, collection) => {
+        return accum + '\n'
+            + (index === 0 ? '' : 'and ')
+            + item.brand + ' '
+            + item.model + ' with price '
+            + item.price + '0€'
+            + (index === collection.count - 1 ?
+                '\n' + 'in total ' + collection.count + ' products'
+                : ''
+            )
+    }, 'i will buy the following products')
+
+    assert(explanation === `i will buy the following products
+Asturiana Premium 1.5l with price 1.70€
+and Veritas Copos finos avena 4kg with price 4.50€
+and Veritas Vinagre de manzana 1l with price 2.70€
+in total 3 products`, 'explanation has the initial text and all products description')
+}

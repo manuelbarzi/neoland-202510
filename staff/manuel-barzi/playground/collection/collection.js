@@ -129,4 +129,16 @@ class Collection {
             if (matches) return element
         }
     }
+
+    reduce(callback, initialValue) {
+        let accum = initialValue
+
+        for (let i = 0; i < this.count; i++) {
+            const element = this[i]
+
+            accum = callback(accum, element, i, this)
+        }
+
+        return accum
+    }
 }
