@@ -97,23 +97,6 @@ const { assert } = console
     assert(total === 302.5, 'total is 302.5')
 }
 
-// CASE sum value + index + count of all elements
-{
-    const nums = new Collection()
-    nums[0] = 10
-    nums[1] = 20
-    nums[2] = 30
-    nums.count = 3
-
-    let sum = 0
-
-    nums.forEach((element, index, collection) => {
-        sum += element + index + collection.count
-    })
-
-    assert(sum === 72, 'sum is 72')
-}
-
 // TEST map
 
 // CASE names to uppercase
@@ -173,27 +156,6 @@ const { assert } = console
     assert(car2.year === 2010, 'car2.year is 2010')
 }
 
-// CASE maps elements to more info (element, index, count)
-{
-    const nums = new Collection()
-    nums[0] = 10
-    nums[1] = 20
-    nums[2] = 30
-    nums.count = 3
-
-    const result = nums.map((element, index, collection) => {
-        return {
-            element,
-            index,
-            collection
-        }
-    })
-
-    assert(result[0].element === 10 && result[0].index === 0 && result[0].collection === nums, 'result[0] contains element 10, index 0, and collection nums')
-    assert(result[1].element === 20 && result[1].index === 1 && result[1].collection === nums, 'result[1] contains element 20, index 1, and collection nums')
-    assert(result[2].element === 30 && result[2].index === 2 && result[2].collection === nums, 'result[2] contains element 30, index 2, and collection nums')
-}
-
 // TEST filter
 
 // CASE colors with character o
@@ -236,43 +198,3 @@ const { assert } = console
     assert(garcias[1].name === 'Antonio' && garcias[1].surname === 'Garcia' && garcias[1].balance === 3000, '1 is Antonio Garcia (3000)')
     assert(garcias[2].name === 'Jaime' && garcias[2].surname === 'Garcia' && garcias[2].balance === 7000, '2 is Jaime Garcia (7000)')
 }
-
-// CASE filters elements with value + count < 50, index <=1 
-{
-    const nums = new Collection()
-    nums[0] = 10
-    nums[1] = 20
-    nums[2] = 30
-    nums.count = 3
-
-    const result = nums.filter((element, index, collection) => {
-        return element + collection.count < 50 && index <= 1
-    })
-
-    assert(result.count === 2, 'result count is 2')
-    assert(result[0] === 10, 'result at 0 is 10')
-    assert(result[1] === 20, 'result at 1 is 20')
-}
-
-// TEST find
-
-// CASE find first client with surname Jimenez
-{
-    const clients = new Collection()
-    clients[0] = { name: 'Pepito', surname: 'Grillo', balance: 1000 }
-    clients[1] = { name: 'Juan', surname: 'Garcia', balance: 600 }
-    clients[2] = { name: 'Peter', surname: 'Pan', balance: 1010 }
-    clients[3] = { name: 'Antonio', surname: 'Garcia', balance: 3000 }
-    clients[4] = { name: 'Manuel', surname: 'Lopez', balance: 5000 }
-    clients[5] = { name: 'Jorge', surname: 'Grillo', balance: 6000 }
-    clients[6] = { name: 'Gerardo', surname: 'Martinez', balance: 10000 }
-    clients[7] = { name: 'Juan', surname: 'Jimenez', balance: 9000 }
-    clients[8] = { name: 'Jaime', surname: 'Garcia', balance: 7000 }
-    clients.count = 9
-
-    const client = clients.find(client => client.surname === 'Jimenez')
-
-    assert(client.name === 'Juan' && client.surname === 'Jimenez' && client.balance === 9000, 'client is Juan Jimenez (9000)')
-}
-
-// TODO add CASE of find with all arguments in callback

@@ -85,7 +85,7 @@ class Collection {
         for (let i = 0; i < this.count; i++) {
             const element = this[i]
 
-            callback(element, i, this)
+            callback(element)
         }
     }
 
@@ -95,7 +95,7 @@ class Collection {
         for (let i = 0; i < this.count; i++) {
             const element = this[i]
 
-            const mappedElement = callback(element, i, this)
+            const mappedElement = callback(element)
             mapped[mapped.count] = mappedElement
             mapped.count++
         }
@@ -109,7 +109,7 @@ class Collection {
         for (let i = 0; i < this.count; i++) {
             const element = this[i]
 
-            const matches = callback(element, i, this)
+            const matches = callback(element)
 
             if (matches) {
                 filtered[filtered.count] = element
@@ -118,15 +118,5 @@ class Collection {
         }
 
         return filtered
-    }
-
-    find(callback) {
-        for (let i = 0; i < this.count; i++) {
-            const element = this[i]
-
-            const matches = callback(element)
-
-            if (matches) return element
-        }
     }
 }
