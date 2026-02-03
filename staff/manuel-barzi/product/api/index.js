@@ -15,7 +15,7 @@ api.post('/users', jsonBodyParser, (req, res) => {
 
         logic.registerUser(name, email, username, password, passwordRepeat)
 
-        res.send()
+        res.status(201).send()
     } catch (error) {
         res.status(400).json({ error: error.constructor.name, message: error.message })
     }
@@ -41,7 +41,33 @@ api.post('/pets', jsonBodyParser, (req, res) => {
 
         logic.addPet(userId, name, birthdate, weight, image)
 
-        res.send()
+        res.status(201).send()
+    } catch (error) {
+        res.status(400).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.get('/pets', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const pets = logic.getPets(userId)
+
+        res.json(pets)
+    } catch (error) {
+        res.status(400).json({ error: error.constructor.name, message: error.message })
+    }
+})
+
+api.delete('/pets/:petId', (req, res) => {
+    try {
+        const userId = req.headers.authorization.slice(6)
+
+        const { petId } = req.params
+
+        logic.removePet(userId, petId)
+
+        res.status(204).send()
     } catch (error) {
         res.status(400).json({ error: error.constructor.name, message: error.message })
     }
