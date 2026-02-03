@@ -58,7 +58,10 @@ class Logic {
         return user.id
     }
 
-    changeUserEmail(email, newEmail, newEmailRepeat) {
+    changeUserEmail(userId, email, newEmail, newEmailRepeat) {
+        if (typeof userId !== 'string') throw new Error('invalid userId type')
+        if (!USER_ID_REGEX.test(userId)) throw new Error('invalid userId format')
+
         if (typeof email !== 'string') throw new Error('invalid email type')
         if (email.length < 6) throw new Error('invalid email length')
         if (!EMAIL_REGEX.test(email)) throw new Error('invalid email format')
@@ -73,14 +76,23 @@ class Logic {
 
         if (newEmail !== newEmailRepeat) throw new Error('newEmail and newEmailRepeat do not match')
 
-        const user = data.findUserById(data.getLoggedInUserId())
+        const user = data.findUserById(userId)
+
+        if (!user) throw new Error('user not found')
 
         if (user.email !== email) throw new Error('email do not belong to user')
+
+        const otherUser = data.findUserByEmail(newEmail)
+
+        if (otherUser) throw new Error('newEmail belongs to another user')
 
         user.email = newEmail
     }
 
-    changeUserPassword(password, newPassword, newPasswordRepeat) {
+    changeUserPassword(userId, password, newPassword, newPasswordRepeat) {
+        if (typeof userId !== 'string') throw new Error('invalid userId type')
+        if (!USER_ID_REGEX.test(userId)) throw new Error('invalid userId format')
+
         if (typeof password !== 'string') throw new Error('invalid password type')
         if (password.length < 8) throw new Error('invalid password length')
 
@@ -92,7 +104,9 @@ class Logic {
 
         if (newPassword !== newPasswordRepeat) throw new Error('newPassword and newPasswordRepeat do not match')
 
-        const user = data.findUserById(data.getLoggedInUserId())
+        const user = data.findUserById(userId)
+
+        if (!user) throw new Error('user not found')
 
         if (user.password !== password) throw new Error('incorrect password')
 
