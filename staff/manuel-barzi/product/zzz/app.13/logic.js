@@ -28,28 +28,17 @@ class Logic {
 
         if (password !== passwordRepeat) throw new Error('passwords do not match')
 
-        return fetch('http://localhost:8080/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, username, password, passwordRepeat })
-        })
-            .then(res => {
-                debugger
-                const { status } = res
+        let user = data.findUserByEmail(email)
 
-                if (status === 201)
-                    return
+        if (user !== null) throw new Error('user email already exists')
 
-                return res.json()
-                    .then(body => {
-                        debugger
-                        const { error, message } = body
+        user = data.findUserByUsername(username)
 
-                        throw new Error(message)
-                    })
-            })
+        if (user !== null) throw new Error('user username already exists')
+
+        user = new User('user-' + data.usersCount, name, email, username, password, 'regular')
+
+        data.insertUser(user)
     }
 
     loginUser(username, password) {

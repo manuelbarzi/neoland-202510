@@ -26,14 +26,12 @@ export function Register({ onGoToLogin }) {
 
         try {
             logic.registerUser(name, email, username, password, passwordRepeat)
-                .then(() => {
-                    form.reset()
 
-                    setMessage('')
+            form.reset()
 
-                    onGoToLogin()
-                })
-                .catch(error => setMessage(error.message))
+            setMessage('')
+
+            onGoToLogin()
         } catch (error) {
             setMessage(error.message)
         }
@@ -48,26 +46,26 @@ export function Register({ onGoToLogin }) {
     console.log('Register -> render')
 
     return <div className="p-4">
-        <h1 className="font-bold text-xl">MyPet</h1>
+            <h1 className="font-bold text-xl">MyPet</h1>
 
-        <h2 className="font-bold">Register</h2>
+            <h2 className="font-bold">Register</h2>
 
-        <Form onSubmit={handleRegisterSubmit}>
-            <Field alias="name" type="text">Name</Field>
+            <Form onSubmit={handleRegisterSubmit}>
+                <Field alias="name" type="text">Name</Field>
 
-            <Field alias="email" type="email">E-mail</Field>
+                <Field alias="email" type="email">E-mail</Field>
 
-            <Field alias="username" type="text">Username</Field>
+                <Field alias="username" type="text">Username</Field>
 
-            <PasswordField alias="password">Password</PasswordField>
+                <PasswordField alias="password">Password</PasswordField>
 
-            <PasswordField alias="passwordRepeat">Repeat Password</PasswordField>
+                <PasswordField alias="passwordRepeat">Repeat Password</PasswordField>
 
-            <Button className="self-center" type="submit">Register</Button>
-        </Form>
+                <Button className="self-center" type="submit">Register</Button>
+            </Form>
 
-        <Anchor onClick={handleLoginClick}>Login</Anchor>
+            <Anchor onClick={handleLoginClick}>Login</Anchor>
 
-        <p>{message}</p>
-    </div>
+            <p>{message}</p>
+        </div>
 }
