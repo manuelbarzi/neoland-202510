@@ -15,7 +15,7 @@ export function AddPet({ onGoToHome }) {
     const handleBackClick = event => {
         event.preventDefault()
 
-        onGoToHome()   
+        onGoToHome()
     }
 
     const handleAddPetSubmit = event => {
@@ -30,10 +30,12 @@ export function AddPet({ onGoToHome }) {
 
         try {
             logic.addPet(name, birthdate, weight, image)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
-
-            onGoToHome()
+                    onGoToHome()
+                })
+                .catch(error => setMessage(error.message))
         } catch (error) {
             setMessage(error.message)
         }
@@ -42,26 +44,26 @@ export function AddPet({ onGoToHome }) {
     console.log('AddPet -> render')
 
     return <div className="p-4">
-            <h1 className="font-bold text-xl">MyPet</h1>
+        <h1 className="font-bold text-xl">MyPet</h1>
 
-            <div className="flex justify-between">
-                <h2 className="font-bold">Add Pet</h2>
+        <div className="flex justify-between">
+            <h2 className="font-bold">Add Pet</h2>
 
-                <Anchor onClick={handleBackClick}>&lt; Back</Anchor>
-            </div>
-
-            <Form onSubmit={handleAddPetSubmit}>
-                <Field alias="name" type="text">Name</Field>
-
-                <Field alias="birthdate" type="date">Birthdate</Field>
-
-                <Field alias="weight" type="number">Weight (kg)</Field>
-
-                <Field alias="image" type="url">Image</Field>
-
-                <Button className="self-center mt-4" type="submit">Add Pet</Button>
-            </Form>
-
-            <p>{message}</p>
+            <Anchor onClick={handleBackClick}>&lt; Back</Anchor>
         </div>
+
+        <Form onSubmit={handleAddPetSubmit}>
+            <Field alias="name" type="text">Name</Field>
+
+            <Field alias="birthdate" type="date">Birthdate</Field>
+
+            <Field alias="weight" type="number">Weight (kg)</Field>
+
+            <Field alias="image" type="url">Image</Field>
+
+            <Button className="self-center mt-4" type="submit">Add Pet</Button>
+        </Form>
+
+        <p>{message}</p>
+    </div>
 }
