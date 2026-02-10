@@ -59,13 +59,32 @@ class Logic {
         if (typeof password !== 'string') throw new Error('invalid password type')
         if (password.length < 8) throw new Error('invalid password length')
 
-        const user = data.findUserByUsername(username)
+        return fetch('http://localhost:8080/users/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+            .then(res => {
+                debugger
+                const { status } = res
 
-        if (user === null) throw new Error('user not found')
+                if (status === 200)
+                    return res.json()
+                        .then(userId => {
+                            debugger
+                            data.setLoggedInUserId(userId)
+                        })
 
-        if (user.password !== password) throw new Error('incorrect password')
+                return res.json()
+                    .then(body => {
+                        debugger
+                        const { error, message } = body
 
-        data.setLoggedInUserId(user.id)
+                        throw new Error(message)
+                    })
+            })
     }
 
     logoutUser() {
