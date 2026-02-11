@@ -47,11 +47,12 @@ export function PetList() {
         try {
             logic.deletePet(petId)
                 .then(() => {
-                    return logic.getPets()
-                })
-                .then(pets => {
                     setPetId(null)
-                    setPets(pets)
+
+                    return logic.getPets()
+                        .then(pets => {
+                            setPets(pets)
+                        })
                 })
                 .catch(error => setMessage(error.message))
         } catch (error) {
