@@ -4,6 +4,8 @@ import { Form } from './commons/Form'
 import { PasswordField } from './commons/PasswordField'
 import { Button } from './commons/Button'
 
+import { logic } from '../../logic'
+
 export function ChangeUserPassword() {
     console.log('ChangeUserPassword -> call')
 
@@ -20,8 +22,12 @@ export function ChangeUserPassword() {
 
         try {
             logic.changeUserPassword(password, newPassword, newPasswordRepeat)
+                .then(() => {
+                    form.reset()
 
-            form.reset()
+                    setMessage('user password successfully updated')
+                })
+                .catch(error => setMessage(error.message))
         } catch (error) {
             setMessage(error.message)
         }
