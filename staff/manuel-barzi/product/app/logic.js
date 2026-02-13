@@ -229,7 +229,7 @@ class Logic {
             })
     }
 
-    deletePet(petId) {
+    removePet(petId) {
         if (data.getLoggedInUserId() === null) throw new Error('user not logged in')
 
         if (typeof petId !== 'string') throw new Error('invalid pet-id type')
@@ -252,7 +252,36 @@ class Logic {
                     .then(body => {
                         const { error, message } = body
 
-                        console.error(error, message)
+                        throw new Error(message)
+                    })
+            })
+    }
+
+    getPet(petId) {
+        if (data.getLoggedInUserId() === null) throw new Error('user not logged in')
+
+        if (typeof petId !== 'string') throw new Error('invalid pet-id type')
+
+        if (!PET_ID_REGEX.test(petId)) throw new Error('invalid pet-id format')
+
+        return fetch('http://localhost:8080/pets/' + petId, {
+            // method: 'GET',
+            headers: {
+                Authorization: 'Basic ' + data.getLoggedInUserId()
+            }
+        })
+            .then(res => {
+                const { status } = res
+
+                if (status === 200)
+                    return res.json()
+                        .then(pet => pet)
+
+                return res.json()
+                    .then(body => {
+                        const { error, message } = body
+
+                        throw new Error(message)
                     })
             })
     }

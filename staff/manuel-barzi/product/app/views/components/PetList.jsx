@@ -5,7 +5,7 @@ import { Feedback } from './commons/Feedback'
 
 import { logic } from '../../logic'
 
-export function PetList() {
+export function PetList({ onGoToPetDetail }) {
     console.log('PetList -> call')
 
     const [feedback, setFeedback] = useState(null) // { message, level }
@@ -26,8 +26,9 @@ export function PetList() {
         }
     }, [])
 
-    const handleDeletePetClick = event => {
+    const handleRemovePetClick = event => {
         event.preventDefault()
+        event.stopPropagation()
 
         const button = event.target
 
@@ -36,17 +37,17 @@ export function PetList() {
         setPetId(petId)
     }
 
-    const handleCancelDeletePetClick = event => {
+    const handleCancelRemovePetClick = event => {
         event.preventDefault()
 
         setPetId(null)
     }
 
-    const handleConfirmDeletePetClick = event => {
+    const handleConfirmRemovePetClick = event => {
         event.preventDefault()
 
         try {
-            logic.deletePet(petId)
+            logic.removePet(petId)
                 .then(() => {
                     return logic.getPets()
                 })
@@ -60,28 +61,28 @@ export function PetList() {
         }
     }
 
-    const handleGoToPetClick = event => {
+    const handleGoToPetDetailClick = event => {
         event.preventDefault()
 
-        const li = event.target
+        const li = event.currentTarget
 
         const petId = li.id
 
-        console.log(petId)
+        onGoToPetDetail(petId)
     }
 
     console.log('PetList -> render')
 
     return <div>
         <ul className="flex flex-col gap-2 mt-2">
-            {pets.map(pet => <li id={pet.id} className="flex items-center border-2 border-black p-2 justify-between" onClick={handleGoToPetClick}>
+            {pets.map(pet => <li id={pet.id} className="flex items-center border-2 border-black p-2 justify-between" onClick={handleGoToPetDetailClick}>
                 <div className="flex items-center gap-4">
                     <img src={pet.image} className="rounded-full w-10 h-10 object-cover" />
 
                     <p>{pet.name}</p>
                 </div>
 
-                <Button id={pet.id} className="justify-self-end" onClick={handleDeletePetClick}>🗑️</Button>
+                <Button id={pet.id} className="justify-self-end" onClick={handleRemovePetClick}>🗑️</Button>
             </li>)}
         </ul>
 
@@ -90,8 +91,8 @@ export function PetList() {
                 <p className="text-center">Delete Pet?</p>
 
                 <div className="flex justify-center gap-2">
-                    <Button onClick={handleCancelDeletePetClick}>❌</Button>
-                    <Button onClick={handleConfirmDeletePetClick}>✅</Button>
+                    <Button onClick={handleCancelRemovePetClick}>❌</Button>
+                    <Button onClick={handleConfirmRemovePetClick}>✅</Button>
                 </div>
             </div>
         </div>}
