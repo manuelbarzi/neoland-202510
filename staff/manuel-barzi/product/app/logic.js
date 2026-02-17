@@ -101,7 +101,7 @@ class Logic {
 
         if (newEmail !== newEmailRepeat) throw new Error('newEmail and newEmailRepeat do not match')
 
-        return fetch('http://localhost:8080/users/email', {
+        return fetch('http://localhost:8080/users/me/email', {
             method: 'PATCH',
             headers: {
                 Authorization: 'Basic ' + data.getLoggedInUserId(),
@@ -138,7 +138,7 @@ class Logic {
 
         if (newPassword !== newPasswordRepeat) throw new Error('newPassword and newPasswordRepeat do not match')
 
-        return fetch('http://localhost:8080/users/password', {
+        return fetch('http://localhost:8080/users/me/password', {
             method: 'PATCH',
             headers: {
                 Authorization: 'Basic ' + data.getLoggedInUserId(),
@@ -176,6 +176,35 @@ class Logic {
                 if (status === 200)
                     return res.json()
                         // .then(user => user)
+
+                return res.json()
+                    .then(body => {
+                        const { error, message } = body
+
+                        throw new Error(message)
+                    })
+            })
+    }
+
+    changeUserImage(image) {
+        if (data.getLoggedInUserId() === null) throw new Error('user not logged in')
+
+        if (typeof image !== 'string') throw new Error('invalid image type')
+        if (!URL_REGEX.test(image)) throw new Error('invalid image format')
+
+        return fetch('http://localhost:8080/users/me/image', {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Basic ' + data.getLoggedInUserId(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ image })
+        })
+            .then(res => {
+                const { status } = res
+
+                if (status === 204)
+                    return
 
                 return res.json()
                     .then(body => {

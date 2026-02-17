@@ -1,9 +1,9 @@
 const { data, User, Pet } = require('./data')
 
-data.insertUser(new User('user-' + data.usersCount, 'Peter Pan', 'peter@pan.com', 'peterpan', '123123123', 'regular'))
-data.insertUser(new User('user-' + data.usersCount, 'Wendy Darling', 'wendy@darling.com', 'wendydarling', '123123123', 'regular'))
-data.insertUser(new User('user-' + data.usersCount, 'Campa Nilla', 'campa@nilla.com', 'campanilla', '123123123', 'regular'))
-data.insertUser(new User('user-' + data.usersCount, 'Pepito Grillo', 'pepito@grillo.com', 'pepitogrillo', '123123123', 'regular'))
+data.insertUser(new User('user-' + data.usersCount, 'Peter Pan', 'peter@pan.com', 'peterpan', '123123123', null,'regular'))
+data.insertUser(new User('user-' + data.usersCount, 'Wendy Darling', 'wendy@darling.com', 'wendydarling', '123123123', null, 'regular'))
+data.insertUser(new User('user-' + data.usersCount, 'Campa Nilla', 'campa@nilla.com', 'campanilla', '123123123', null, 'regular'))
+data.insertUser(new User('user-' + data.usersCount, 'Pepito Grillo', 'pepito@grillo.com', 'pepitogrillo', '123123123', null, 'regular'))
 
 data.insertPet(new Pet('pet-' + data.petsCount, 'user-0', 'Sultan', '2024-12-01', 20, 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTVhMDRuNzh2c2Z4cmxzN2U0aHRsOTFzMDBvcnoydG1wZTc4dXBnbSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/FY8c5SKwiNf1EtZKGs/giphy.gif'))
 data.insertPet(new Pet('pet-' + data.petsCount, 'user-0', 'Simba', '2020-12-01', 3, 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXM3YjY4aDF6bHhtN29lZDlxYzBvZDRuOGFtN3ZoYmt6MHVzMXYzeCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/vyBYO8ENb4eDFpYmDI/giphy.gif'))
