@@ -69,9 +69,7 @@ class Logic {
 
                 if (status === 200)
                     return res.json()
-                        .then(userId => {
-                            data.setLoggedInUserId(userId)
-                        })
+                        .then(userId => data.setLoggedInUserId(userId))
 
                 return res.json()
                     .then(body => {
@@ -163,6 +161,31 @@ class Logic {
             })
     }
 
+    getLoggedInUser() {
+        if (data.getLoggedInUserId() === null) throw new Error('user not logged in')
+
+        return fetch('http://localhost:8080/users/me', {
+            method: 'GET',
+            headers: {
+                Authorization: 'Basic ' + data.getLoggedInUserId()
+            }
+        })
+            .then(res => {
+                const { status } = res
+
+                if (status === 200)
+                    return res.json()
+                        // .then(user => user)
+
+                return res.json()
+                    .then(body => {
+                        const { error, message } = body
+
+                        throw new Error(message)
+                    })
+            })
+    }
+
     addPet(name, birthdate, weight, image) {
         if (data.getLoggedInUserId() === null) throw new Error('user not logged in')
 
@@ -216,9 +239,7 @@ class Logic {
 
                 if (status === 200)
                     return res.json()
-                        .then(pets => {
-                            return pets
-                        })
+                        // .then(pets => pets)
 
                 return res.json()
                     .then(body => {
@@ -275,7 +296,7 @@ class Logic {
 
                 if (status === 200)
                     return res.json()
-                        .then(pet => pet)
+                        // .then(pet => pet)
 
                 return res.json()
                     .then(body => {
