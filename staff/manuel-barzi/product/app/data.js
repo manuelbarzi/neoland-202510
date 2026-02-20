@@ -1,16 +1,16 @@
 // manager
 
 class Data {
-    constructor() {
-        this.loggedInUserId = null
-    }
-
     setLoggedInUserId(userId) {
-        this.loggedInUserId = userId
+        sessionStorage.userId = userId
     }
 
     getLoggedInUserId() {
-        return this.loggedInUserId
+        return sessionStorage.userId
+    }
+
+    removeLoggedInUserId() {
+        delete sessionStorage.userId
     }
 }
 
