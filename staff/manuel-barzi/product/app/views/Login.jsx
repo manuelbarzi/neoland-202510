@@ -12,7 +12,7 @@ import { logic } from '../logic'
 export function Login({ onUserLoggedIn, onGoToRegister }) {
     console.log('Login -> call')
 
-    const [feedback, setFeedback] = useState(null) // { message, level }
+    const [feedback, setFeedback] = useState(null)
 
     const handleLoginSubmit = event => {
         event.preventDefault()

@@ -18,7 +18,6 @@ export function App() {
     console.log('App -> call')
 
     const [feedback, setFeedback] = useState(null)
-    const [petId, setPetId] = useState(null)
     let loggedIn = false
 
     const navigate = useNavigate()
@@ -39,15 +38,9 @@ export function App() {
 
     const handleGoToProfile = () => navigate('/profile')
 
-    const handleGoToPetDetailById = petId => {
-        setPetId(petId)
+    const handleGoToPetDetail = petId => navigate(`/pets/${petId}/detail`)
 
-        handleGoToPetDetail()
-    }
-
-    const handleGoToPetDetail = () => navigate('/pet-detail')
-
-    const handleGoToModifyPet = () => navigate('/modify-pet')
+    const handleGoToModifyPet = petId => navigate(`/pets/${petId}/edit`)
 
     console.log('App -> render')
 
@@ -56,7 +49,7 @@ export function App() {
             <Route path="/" element={!loggedIn ?
                 <Landing onGoToLogin={handleGoToLogin} onGoToRegister={handleGoToRegister} />
                 :
-                <Home onGoToAddPet={handleGoToAddPet} onUserLoggedOut={handleGoToLogin} onGoToProfile={handleGoToProfile} onGoToPetDetail={handleGoToPetDetailById} />
+                <Home onGoToAddPet={handleGoToAddPet} onUserLoggedOut={handleGoToLogin} onGoToProfile={handleGoToProfile} onGoToPetDetail={handleGoToPetDetail} />
             } />
 
             <Route path="/login" element={!loggedIn ? <Login onUserLoggedIn={handleGoToHome} onGoToRegister={handleGoToRegister} /> : <Navigate to="/" />} />
@@ -67,9 +60,9 @@ export function App() {
 
             <Route path="/profile" element={loggedIn ? <Profile onGoToHome={handleGoToHome} /> : <Navigate to="/login" />} />
 
-            <Route path="/pet-detail" element={loggedIn ? <PetDetail petId={petId} onGoToHome={handleGoToHome} onGoToModifyPet={handleGoToModifyPet} /> : <Navigate to="/login" />} />
+            <Route path="/pets/:petId/detail" element={loggedIn ? <PetDetail onGoToHome={handleGoToHome} onGoToModifyPet={handleGoToModifyPet} /> : <Navigate to="/login" />} />
 
-            <Route path="/modify-pet" element={loggedIn ? <ModifyPet petId={petId} onGoBack={handleGoToPetDetail} /> : <Navigate to="/login" />} />
+            <Route path="/pets/:petId/edit" element={loggedIn ? <ModifyPet onGoBack={handleGoToPetDetail} /> : <Navigate to="/login" />} />
         </Routes>
 
         {feedback && <Feedback feedback={feedback} />}

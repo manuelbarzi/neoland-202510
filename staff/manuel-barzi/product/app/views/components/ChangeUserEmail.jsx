@@ -10,7 +10,7 @@ import { logic } from '../../logic'
 export function ChangeUserEmail() {
     console.log('ChangeUserEmail -> call')
 
-    const [feedback, setFeedback] = useState(null) // { message, level }
+    const [feedback, setFeedback] = useState(null)
 
     const handleChangeEmailSubmit = event => {
         event.preventDefault()
