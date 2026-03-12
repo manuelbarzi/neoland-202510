@@ -31,80 +31,88 @@ class Logic {
         validate.username(username)
         validate.password(password)
 
-        const user = data.findUserByUsername(username)
+        return data.findUserByUsername(username)
+            .then(user => {
+                if (user === null) throw new ExistenceError('user not found')
 
-        if (user === null) throw new ExistenceError('user not found')
+                if (user.password !== password) throw new CredentialError('incorrect password')
 
-        if (user.password !== password) throw new CredentialError('incorrect password')
-
-        return user.id
+                return user.id
+            })
     }
 
     changeUserEmail(userId, email, newEmail, newEmailRepeat) {
-        validate.userId(userId)
+        validate.id(userId, 'userId')
         validate.email(email)
         validate.email(newEmail, 'newEmail')
         validate.email(newEmailRepeat, 'newEmailRepeat')
         validate.match(newEmail, newEmailRepeat, 'newEmail', 'newEmailRepeat')
 
-        const user = data.findUserById(userId)
-        if (!user) throw new ExistenceError('user not found')
+        return data.findUserById(userId)
+            .then(user => {
+                if (!user) throw new ExistenceError('user not found')
 
-        if (user.email !== email) throw new OwnershipError('email do not belong to user')
+                if (user.email !== email) throw new OwnershipError('email do not belong to user')
 
-        const otherUser = data.findUserByEmail(newEmail)
+                return data.findUserByEmail(newEmail)
+                    .then(otherUser => {
+                        if (otherUser) throw new OwnershipError('newEmail belongs to another user')
 
-        if (otherUser) throw new OwnershipError('newEmail belongs to another user')
+                        const { name, username, password, image, role } = user
 
-        const { name, username, password, image } = user
-
-        data.updateUser(new User(userId, name, newEmail, username, password, image))
+                        return data.updateUser(new User(userId, name, newEmail, username, password, image, role))
+                    })
+            })
     }
 
     changeUserPassword(userId, password, newPassword, newPasswordRepeat) {
-        validate.userId(userId)
+        validate.id(userId, 'userId')
         validate.password(password)
         validate.password(newPassword, 'newPassword')
         validate.password(newPasswordRepeat, 'newPasswordRepeat')
         validate.match(newPassword, newPasswordRepeat, 'newPassword', 'newPasswordRepeat')
 
-        const user = data.findUserById(userId)
+        return data.findUserById(userId)
+            .then(user => {
+                if (!user) throw new ExistenceError('user not found')
 
-        if (!user) throw new ExistenceError('user not found')
+                if (user.password !== password) throw new CredentialError('incorrect password')
 
-        if (user.password !== password) throw new CredentialError('incorrect password')
+                const { name, email, username, image, role } = user
 
-        const { name, email, username, image } = user
-
-        data.updateUser(new User(userId, name, email, username, newPassword, image))
+                data.updateUser(new User(userId, name, email, username, newPassword, image, role))
+            })
     }
 
     getUser(userId) {
-        validate.userId(userId)
+        validate.id(userId, 'userId')
 
-        const user = data.findUserById(userId)
-        if (!user) throw new ExistenceError('user not found')
+        return data.findUserById(userId)
+            .then(user => {
+                if (!user) throw new ExistenceError('user not found')
 
-        const { name, email, username, image } = user
+                const { name, email, username, image } = user
 
-        return { name, email, username, image }
+                return { name, email, username, image }
+            })
     }
 
     changeUserImage(userId, image) {
-        validate.userId(userId)
+        validate.id(userId, 'userId')
         validate.url(image, 'image')
 
-        const user = data.findUserById(userId)
+        return data.findUserById(userId)
+            .then(user => {
+                if (!user) throw new ExistenceError('user not found')
 
-        if (!user) throw new ExistenceError('user not found')
+                const { name, email, username, password, role } = user
 
-        const { name, email, username, password } = user
-
-        data.updateUser(new User(userId, name, email, username, password, image))
+                return data.updateUser(new User(userId, name, email, username, password, image, role))
+            })
     }
 
     addPet(userId, name, birthdate, weight, image) {
-        validate.userId(userId)
+        validate.id(userId, 'userId')
         validate.name(name)
         validate.date(birthdate, 'birthdate')
         validate.number(weight, 'weight')
@@ -119,7 +127,7 @@ class Logic {
     }
 
     getPets(userId) {
-        validate.userId(userId)
+        validate.id(userId, 'userId')
 
         const user = data.findUserById(userId)
         if (!user) throw new Error('user not found')
@@ -130,8 +138,8 @@ class Logic {
     }
 
     removePet(userId, petId) {
-        validate.userId(userId)
-        validate.petId(petId)
+        validate.id(userId, 'userId')
+        validate.id(petId, 'petId')
 
         const user = data.findUserById(userId)
         if (!user) throw new ExistenceError('user not found')
@@ -146,8 +154,8 @@ class Logic {
     }
 
     getPet(userId, petId) {
-        validate.userId(userId)
-        validate.petId(petId)
+        validate.id(userId, 'userId')
+        validate.id(petId, 'petId')
 
         const user = data.findUserById(userId)
         if (!user) throw new ExistenceError('user not found')
@@ -161,8 +169,8 @@ class Logic {
     }
 
     modifyPet(userId, petId, name, birthdate, weight, image) {
-        validate.userId(userId)
-        validate.petId(petId)
+        validate.id(userId, 'userId')
+        validate.id(petId, 'petId')
         validate.name(name)
         validate.date(birthdate, 'birthdate')
         validate.number(weight, 'weight')
