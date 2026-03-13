@@ -1,7 +1,27 @@
-import { data, User, Pet } from './data.js'
+import { data, UserData, PetData } from './data.js'
 import { validate } from './validate.js'
 
 import { DuplicityError, ExistenceError, CredentialError, OwnershipError } from './errors.js'
+
+class User {
+    constructor(id, name, email, username) {
+        this.id = id
+        this.name = name
+        this.email = email
+        this.username = username
+    }
+}
+
+class Pet {
+    constructor(id, ownerId, name, birthdate, weight, image) {
+        this.id = id
+        this.ownerId = ownerId
+        this.name = name
+        this.birthdate = birthdate
+        this.weight = weight
+        this.image = image
+    }
+}
 
 class Logic {
     registerUser(name, email, username, password, passwordRepeat) {
@@ -21,7 +41,7 @@ class Logic {
             .then(user => {
                 if (user !== null) throw new DuplicityError('user username already exists')
 
-                user = new User(null, name, email, username, password, null, 'regular')
+                user = new UserData(null, name, email, username, password, null, 'regular')
 
                 return data.insertUser(user)
             })
@@ -60,7 +80,7 @@ class Logic {
 
                         const { name, username, password, image, role } = user
 
-                        return data.updateUser(new User(userId, name, newEmail, username, password, image, role))
+                        return data.updateUser(new UserData(userId, name, newEmail, username, password, image, role))
                     })
             })
     }
@@ -80,7 +100,7 @@ class Logic {
 
                 const { name, email, username, image, role } = user
 
-                data.updateUser(new User(userId, name, email, username, newPassword, image, role))
+                data.updateUser(new UserData(userId, name, email, username, newPassword, image, role))
             })
     }
 
@@ -93,7 +113,7 @@ class Logic {
 
                 const { name, email, username, image } = user
 
-                return { name, email, username, image }
+                return new User(userId, name, email, username, image)
             })
     }
 
@@ -107,7 +127,7 @@ class Logic {
 
                 const { name, email, username, password, role } = user
 
-                return data.updateUser(new User(userId, name, email, username, password, image, role))
+                return data.updateUser(new UserData(userId, name, email, username, password, image, role))
             })
     }
 
@@ -118,23 +138,30 @@ class Logic {
         validate.number(weight, 'weight')
         validate.url(image, 'image')
 
-        const user = data.findUserById(userId)
-        if (!user) throw new ExistenceError('user not found')
-
-        const pet = new Pet('pet-' + data.petsCount, userId, name, birthdate, weight, image)
-
-        data.insertPet(pet)
+        return data.findUserById(userId)
+            .then(user => {
+                if (!user) throw new ExistenceError('user not found')
+        
+                const pet = new PetData(null, userId, name, birthdate, weight, image)
+        
+                return data.insertPet(pet)
+            })
     }
 
     getPets(userId) {
         validate.id(userId, 'userId')
 
-        const user = data.findUserById(userId)
-        if (!user) throw new Error('user not found')
+        return data.findUserById(userId)
+            .then(user => {
+                if (!user) throw new Error('user not found')
+        
+                return data.findPetsByUserId(userId)
+            })
+            .then(petDatas => petDatas.map(petData => {
+                const { id, ownerId, name, birthdate, weight, image } = petData
 
-        const pets = data.findPetsByUserId(userId)
-
-        return pets
+                return new Pet(id, ownerId, name, birthdate, weight, image)
+            }))
     }
 
     removePet(userId, petId) {
@@ -184,7 +211,7 @@ class Logic {
 
         if (pet.userId !== userId) throw new OwnershipError('user not owner of pet')
 
-        data.updatePet(new Pet(petId, userId, name, birthdate, weight, image))
+        data.updatePet(new PetData(petId, userId, name, birthdate, weight, image))
     }
 }
 
