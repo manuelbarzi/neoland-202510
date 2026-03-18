@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react'
 
 import { Button } from './commons/Button'
 
+import { useContext } from '../../context'
+
 import { logic } from '../../logic'
 
-export function PetList({ onGoToPetDetail, onError }) {
+export function PetList({ onGoToPetDetail }) {
     console.log('PetList -> call')
+
+    const { onError } = useContext()
 
     const [pets, setPets] = useState([])
     const [petId, setPetId] = useState(null)
