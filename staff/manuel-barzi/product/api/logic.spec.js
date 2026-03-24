@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 
 import { database } from './models.js'
 
-import { logic, User } from './logic.js'
+import { logic, User, Pet } from './logic.js'
 import { data, UserData, PetData } from './data.js'
 import { CredentialError, DuplicityError, ExistenceError, OwnershipError } from 'com'
 
@@ -339,7 +339,7 @@ describe('logic', () => {
     })
 
     describe('getPets', () => {
-        it('succeeds on existing user', () => {
+        it('succeeds on existing user and pet', () => {
             return data.insertUser(new UserData(null, 'Mi Ke', 'mi@ke.com', 'mike', hashed, null, 'regular'))
                 .then(() => data.findUserByEmail('mi@ke.com'))
                 .then(userData => {
@@ -349,6 +349,7 @@ describe('logic', () => {
                             expect(pets).to.have.lengthOf(1)
 
                             const [pet] = pets
+                            expect(pet).instanceOf(Pet)
                             expect(pet.ownerId).to.equal(userData.id)
                             expect(pet.name).to.equal('Tor Tuga')
                             expect(pet.birthdate.getFullYear()).to.equal(2026)
@@ -368,6 +369,73 @@ describe('logic', () => {
                 .finally(() => {
                     expect(caught).to.be.instanceOf(ExistenceError)
                     expect(caught.message).to.equal('user not found')
+                })
+        })
+    })
+
+    describe('removePet', () => {
+        it('succeeds on existing user and pet', () => {
+            return data.insertUser(new UserData(null, 'Mi Ke', 'mi@ke.com', 'mike', hashed, null, 'regular'))
+                .then(() => data.findUserByEmail('mi@ke.com'))
+                .then(userData => {
+                    return data.insertPet(new PetData(null, userData.id, 'Tor Tuga', '2026-01-10', 2, 'https://image.com/123'))
+                        .then(() => data.findPetsByUserId(userData.id))
+                        .then(petsData => {
+                            const [petData] = petsData
+
+                            return logic.removePet(userData.id, petData.id)
+                        })
+                        .then(() => data.findPetsByUserId(userData.id))
+                        .then(petsData => expect(petsData).to.have.lengthOf(0))
+                })
+        })
+
+        it('fails on non-existing user', () => {
+            let caught = null
+
+            return logic.removePet('012345678901234567890123', '012345678901234567890123')
+                .catch(error => caught = error)
+                .finally(() => {
+                    expect(caught).to.be.instanceOf(ExistenceError)
+                    expect(caught.message).to.equal('user not found')
+                })
+        })
+
+        it('fails on existing user but non-existing pet', () => {
+            let caught = null
+
+            return data.insertUser(new UserData(null, 'Mi Ke', 'mi@ke.com', 'mike', hashed, null, 'regular'))
+                .then(() => data.findUserByEmail('mi@ke.com'))
+                .then(userData => logic.removePet(userData.id, '012345678901234567890123'))
+                .catch(error => caught = error)
+                .finally(() => {
+                    expect(caught).to.be.instanceOf(ExistenceError)
+                    expect(caught.message).to.equal('pet not found')
+                })
+        })
+
+        it('fails on existing user and existing pet from another user', () => {
+            let caught = null
+
+            return Promise.all([
+                data.insertUser(new UserData(null, 'Mi Ke', 'mi@ke.com', 'mike', hashed, null, 'regular')),
+                data.insertUser(new UserData(null, 'Mi Ke 2', 'mi@ke2.com', 'mike2', hashed, null, 'regular'))
+            ])
+                .then(() => data.findUserByEmail('mi@ke2.com'))
+                .then(userData2 => {
+                    return data.insertPet(new PetData(null, userData2.id, 'Tor Tuga', '2026-01-10', 2, 'https://image.com/123'))
+                        .then(() => data.findPetsByUserId(userData2.id))
+                        .then(petsData => {
+                            const [petData] = petsData
+
+                            return data.findUserByEmail('mi@ke.com')
+                                .then(userData => logic.removePet(userData.id, petData.id))
+                        })
+                })
+                .catch(error => caught = error)
+                .finally(() => {
+                    expect(caught).to.be.instanceOf(OwnershipError)
+                    expect(caught.message).to.equal('user not owner of pet')
                 })
         })
     })
