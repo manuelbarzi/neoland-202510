@@ -73,8 +73,8 @@ class Data {
             })
     }
 
-    updateUser(user) {
-        return UserModel.updateOne({ _id: user.id }, { $set: user })
+    updateUser(userData) {
+        return UserModel.updateOne({ _id: userData.id }, { $set: userData })
             .catch(error => { throw new SystemError(error.message) })
             .then(userModel => { })
     }
@@ -118,9 +118,7 @@ class Data {
     }
 
     updatePet(petData) {
-        const { id, ownerId, name, birthdate, weight, image } = petData
-
-        return PetModel.updateOne({ _id: id }, { $set: { owner: ownerId, name, birthdate, weight, image } })
+        return PetModel.updateOne({ _id: petData.id }, { $set: petData })
             .catch(error => { throw new SystemError(error.message) })
             .then(result => { })
     }
