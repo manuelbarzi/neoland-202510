@@ -58,11 +58,13 @@ export function PetList({ onGoToPetDetail }) {
         }
     }
 
+    const handleGoToDetail = () => onGoToPetDetail()
+
     logger.debug('PetList -> render')
 
     return <div>
         <ul className="flex flex-col gap-2 mt-2">
-            {pets.map(pet => <PetItem key={pet.id} pet={pet} onGoToPetDetail={onGoToPetDetail} onRemovePetClick={handleRemovePetClick} />)}
+            {pets.map(pet => <PetItem key={pet.id} pet={pet} onGoToPetDetail={handleGoToDetail} onRemovePetClick={handleRemovePetClick} />)}
         </ul>
 
         {petId && <div className="w-full h-full fixed top-0 left-0 bg-black/75 flex justify-center items-center">
